@@ -24,5 +24,5 @@ public abstract class Vehicle {
 		return currentPosition;
 	}
 
-	
+	public abstract Position moveToPosition();
 }
