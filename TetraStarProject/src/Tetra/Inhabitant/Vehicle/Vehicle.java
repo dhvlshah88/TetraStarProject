@@ -6,7 +6,18 @@ public abstract class Vehicle {
 	
 	private String vehicleId;
 	private Position currentPosition;
+	private boolean vehiclePossessed = false;
 	
+	/**
+	 * Default Constructor.
+	 */
+	public Vehicle(){
+		
+	}
+	
+	public Vehicle(String vehicleId){
+		this.vehicleId = vehicleId;
+	}
 	
 	public void setId(String vehicleId){
 		this.vehicleId = vehicleId;
@@ -24,6 +35,14 @@ public abstract class Vehicle {
 		return currentPosition;
 	}
 
+	public void setPossession(boolean vehiclePossessed){
+		this.vehiclePossessed = vehiclePossessed;
+	}
+	
+	public boolean isPossessed(){
+		return vehiclePossessed;
+	}
+	
 	public abstract Position moveToPosition();
 	
 	@Override
