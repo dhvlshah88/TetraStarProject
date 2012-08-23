@@ -50,11 +50,6 @@ public class NullTRover extends TRovers {
 	}
 
 	@Override
-	public void showMap(){
-		
-	}
-
-	@Override
 	public Location getVaderBase() {
 		return null;
 	}
