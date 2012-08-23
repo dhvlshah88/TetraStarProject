@@ -2,7 +2,6 @@
  * 
  */
 package Tetra.Base;
-import java.util.ArrayList;
 
 import Tetra.Position;
 import Tetra.Map.Map;
@@ -12,97 +11,84 @@ import Tetra.Map.Map;
  * @author Dhaval
  *
  */
+
+
 public class TVaderBase extends Base {
 
 
-	private Map mapInstance;
-	private ArrayList<Map> stolenMapList = null;
+	//This is map reference variable which will contain encrypted star map instance. For now, we have assumed that vaderbase will 
+	//contain only one star map.
+	private Map stolenMapInstance = null;
 
+	//This variable stores boolean value depending on whether map is present in vaderbase or not.
+	private boolean stolenMapPresent = false;
+
+	/*
+	 * Default Constructor.
+	 */
 	public TVaderBase(){
 
 	}
 
 	public TVaderBase(Position basePosition) {
 		super(basePosition);
-		stolenMapList = new ArrayList<Map>();
 	}
 
-	/**
-	private static final long serialVersionUID = -1197783474784364993L;
 
-	private ArrayList<TRovers> troverList = null;
-
-	private TRovers vader = null;
-	private boolean vaderPresent = false;
-	private Map stolenMap = null;
-
-	//Constructor
-	public TVaderBase(Location location) {
-		super(location);
-	}
-
-	//This method creates TVader instance. This is client for creating TVader instance.
-	public void spawnTVader(){
-		TRoverFactory roverFactory = new TRoverFactory();
-		this.vader = roverFactory.createTRover("TVader");
-	}
-
-	// This method sets TVader instance.
-	public void setVader(TVader vader){
-		this.vader = vader;
-	}
-
-	public TVader getVader(){
-		return (TVader)vader;
-	}
-
-	public void enterBase(TRovers trover){
-		if(trover instanceof TVader){
-			if(vaderPresent){
-				return;
-			}
-			setVader((TVader) trover);
-			vaderPresent = true;
+	public void setMap(Map stolenMapInstance){
+		//	if(!isMapEmpty(mapInstance)){
+		if(stolenMapInstance == null){
 			return;
 		}
-
-		if(trover instanceof THero){
-			troverList.add(trover);
-			return;
-		}
-
-		//Message saying Trover cannot enter vaderbase.
-	}
-
-
-	public void setMap(Map map){
-		this.stolenMap = map;
+		
+		this.stolenMapInstance = stolenMapInstance;
+		stolenMapPresent = true;
 	}
 
 	public Map getMap(){
-		return stolenMap;
+		return stolenMapInstance;
 	}
+
+	public Map removeMap(){
+		if(stolenMapInstance == null){
+			return null;
+		}
+
+		Map tempMap = getMap();
+		stolenMapInstance = null;
+		stolenMapPresent = false;
+
+		return tempMap;
+	}
+
+	/*
 	 * 
 	 */
-
-	public void addMap(Map mapInstance){
-		if(!isMapEmpty(mapInstance)){
-			stolenMapList.add(mapInstance);
-		}
+	public boolean isMapPresent(){
+		return stolenMapPresent;
 	}
 
+	/*
 	public boolean isMapEmpty(Map mapInstance){
 		if(mapInstance == null){
 			return true;
 		}
 		return false;
-	}
+	}*/
 
 
+	/*
+	 * (non-Javadoc)
+	 * @see Tetra.Base.Base#baseType()
+	 */
 	public String baseType(){
 		return "VaderBase";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see Tetra.Base.Base#getImageFilePath()
+	 */
 	@Override
 	public String getImageFilePath() {
 		// TODO Auto-generated method stub
