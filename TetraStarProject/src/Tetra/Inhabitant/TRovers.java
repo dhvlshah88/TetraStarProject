@@ -1,5 +1,6 @@
 package Tetra.Inhabitant;
 
+import Tetra.IMoveStrategy;
 import Tetra.Location;
 import Tetra.TFace;
 
@@ -12,8 +13,9 @@ public class TRovers {
 	private Location currentLocation;
 	private Location vaderBaseLocation;
 	private TFace tface;
+	private IMoveStrategy movementStrategy;
 	
-	/*
+	/**
 	 * Default Constructor
 	 */
 	public TRovers(){
@@ -38,31 +40,44 @@ public class TRovers {
 		this.name = name;
 	}
 	
+	/**
+	 * 
+	 * @param tetId
+	 */
 	public void setTetId(String tetId){
 		this.tetId = tetId;
 	}
 	
+	/**
+	 * 
+	 * @param gender
+	 */
 	public void setGender(String gender){
 		this.gender = gender;
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getName(){
 		return name;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getTetId(){
 		return tetId;
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getGender(){
 		return gender;
-	}
-	
-	
-	public void showMap(){
-		
 	}
 	
 	/**
@@ -87,16 +102,49 @@ public class TRovers {
 	public void setLocation(Location currentLocation) {
 		this.currentLocation = currentLocation;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public TFace getTface() {
 		return tface;
 	}
 	
+	/**
+	 * 
+	 * @param tface
+	 */
 	public void setTface(TFace tface) {
 		this.tface = tface;
 	}
-		
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getType(){
 		return "TRover";
+	}
+	
+	/**
+	 * 
+	 * @param movementStrategy
+	 */
+	public void setMovementStrategy(IMoveStrategy movementStrategy){
+		this.movementStrategy = movementStrategy;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public IMoveStrategy getMovementStrategy(){
+		return movementStrategy;
+	}
+	
+	public void moveToLocation(Location nextLocation){
+		
 	}
 	
 }
