@@ -3,9 +3,8 @@
  */
 package Tetra;
 
-
-
-import java.util.ArrayList;
+import Tetra.Base.Base;
+import Tetra.Base.BaseFactory;
 import Tetra.Inhabitant.Vehicle.Vehicle;
 
 /**
@@ -14,33 +13,31 @@ import Tetra.Inhabitant.Vehicle.Vehicle;
  */
 public class Location {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7155070533311395293L;
-
 	//
 	private Position currentPosition = null;
+	
+	//
+	private Base base = null;
+	
+	//
+	private Vehicle vehicle=null;
 
 	//
 	private String locationType;
 
 	//
-	//private ArrayList<Vehicle> vehicleList = null;
-
-	//
 	private boolean tetraInhabitantPresent = false;
+	
+	//
+	private boolean basePresent = false;
 
 	//
-	private boolean isEmptyLocation = false;
+	private boolean emptyLocation = false;
 
 	//
-	private Vehicle vehicle=null;
+	private boolean vehiclePresent = true;
 
-	//
-	private boolean isVehiclePresent = true;
-
-	/*
+	/**
 	 * Initializes Position object that stores row and column number.
 	 */
 	public Location(Position currentPosition){
@@ -48,53 +45,117 @@ public class Location {
 		this.locationType = "EmptyLocation";
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Position getPosition(){
 		return currentPosition;
 	}
 
+	/**
+	 * 
+	 * @param baseType
+	 */
 	public void setUpBase(String baseType){
-
+		if(basePresent){
+			return;
+		}
+		
+		base = BaseFactory.createBase(baseType, currentPosition);
+		setBasePresent(true);
 	}
 
-	/*public void enterBase(TRovers tetraInhabitant){
-		if(this.tetraInhabitant == null){
-			this.tetraInhabitant = tetraInhabitant;
-			setLocationType(this.tetraInhabitant.getType());
-			tetraInhabitantPresent = true;
-		}
-	}*/
-
+	/**
+	 * 
+	 * @return
+	 */
+	public Base getBase(){
+		return base;
+	}
+	
+	/**
+	 * 
+	 * @param tetraInhabitantPresent
+	 */
+	public void setInhabitantPresent(boolean tetraInhabitantPresent){
+		this.tetraInhabitantPresent = tetraInhabitantPresent;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isInhabitantPresent(){
 		return tetraInhabitantPresent;
 	}
 
-
-	public void setEmptyLocation(boolean isEmpty){
-		this.isEmptyLocation = isEmpty;
+	/**
+	 * 
+	 * @param basePresent
+	 */
+	public void setBasePresent(boolean basePresent){
+		this.basePresent = basePresent;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isBasePresent(){
+		return basePresent;
 	}
 
+	/**
+	 * 
+	 * @param emptyLocation
+	 */
+	public void setEmptyLocation(boolean emptyLocation){
+		this.emptyLocation = emptyLocation;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean isEmpty(){
-		return isEmptyLocation;
+		return emptyLocation;
 	}
 
+	/**
+	 * 
+	 * @param locationType
+	 */
 	public void setLocationType(String locationType){
 		this.locationType = locationType;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String locationType() {
 		return locationType;
 	}
-
+	
+	/**
+	 * 
+	 * @param vehicle
+	 */
 	public void setVehicle(Vehicle vehicle){
 		this.vehicle = vehicle;
 		vehicle.setCurrentPosition(this.currentPosition);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Vehicle getVehicle(){
-		if(!isVehiclePresent){
+		if(!vehiclePresent){
 			return null;
 		}
-		isVehiclePresent = false;
+		vehiclePresent = false;
 		return vehicle;
 	}
 
@@ -103,7 +164,7 @@ public class Location {
 	 * @return
 	 */
 	public boolean isVehiclePresent(){
-		return isVehiclePresent;
+		return vehiclePresent;
 	}
 
 	/*public void setImage(String filePath){
