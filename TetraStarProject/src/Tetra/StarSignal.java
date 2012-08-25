@@ -23,7 +23,7 @@ public class StarSignal {
 	 * This method sets mapPresent variable true when map is found in vaderbase.
 	 */
 	public void mapPresent(){
-		this.mapPresent = true;;
+		this.mapPresent = true;
 	}
 	
 	/**
