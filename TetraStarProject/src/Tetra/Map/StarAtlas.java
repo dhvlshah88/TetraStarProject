@@ -9,11 +9,14 @@ import Tetra.StarSignal;
 
 public class StarAtlas extends Map {
 
-	private ArrayList<Map> mapList = null;
+	private ArrayList<StarMap> mapList = null;
+	private StarMap starMap = null;
+	private boolean mapAlreadyPresent = false;
 	private int mapCount = 0;
 
 	public StarAtlas(Position currentPosition, String mapId){
 		super(currentPosition, mapId);
+		mapList = new ArrayList<StarMap>();
 	}
 
 	/*
@@ -21,21 +24,16 @@ public class StarAtlas extends Map {
 	 * this StarMap instance is already present in the StarAtlas instance or not. If not, it will add the 
 	 * StarMap instance.
 	 */
-	public void addStarMap(Map starMap){
-		int counter = 0;
-		/*if(!(starMap instanceof StarMap)){
-			return;
-		}*/
-
-		Iterator<Map> iterator = mapList.iterator();
+	public void addStarMap(StarMap starMap){
+		Iterator<StarMap> iterator = mapList.iterator();
 		while(iterator.hasNext()){
-			Map map = iterator.next(); 
-			if(map.getMapId() == starMap.getMapId()){
-				counter++;	
+			starMap = iterator.next(); 
+			if(this.starMap.getMapId() == starMap.getMapId()){
+				mapAlreadyPresent = true;	
 			}
 		}
 
-		if(counter != 0){
+		if(mapAlreadyPresent){
 			return;
 		}
 
@@ -47,7 +45,7 @@ public class StarAtlas extends Map {
 
 	}
 
-	public ArrayList<Map> getStarMapList(){
+	public ArrayList<StarMap> getStarMapList(){
 		return mapList;
 	}
 
