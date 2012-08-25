@@ -7,7 +7,7 @@ import Tetra.StarSignal;
 
 public abstract class Map implements Cloneable {
 
-	private static int mapId = 0;
+	private String mapId = null;
 	private String locationId;
 	private int itemCount;
 	private Position currentPosition = null;
@@ -23,8 +23,8 @@ public abstract class Map implements Cloneable {
 	 * Initialize values of Map instance.
 	 */
 	
-	public Map(Position currentPosition){
-		mapId++;
+	public Map(Position currentPosition, String mapId){
+		this.mapId = mapId ;
 		this.locationId = currentPosition.getPositionId();
 		this.itemCount = 0;
 		this.currentPosition = currentPosition;
@@ -37,7 +37,7 @@ public abstract class Map implements Cloneable {
 	/*
 	 * Gets StarMap Id.
 	 */
-	public int getMapId(){
+	public String getMapId(){
 		return mapId;
 	}
 	
@@ -91,6 +91,23 @@ public abstract class Map implements Cloneable {
 		return (Map) super.clone();
 	}
 	
+	/**
+	 * 
+	 * @param mapId
+	 * @param heroPosition
+	 * @return {@link StarMap}
+	 * 
+	 */
+	public  StarSignal showSignal(String mapId, Position heroPosition){
+		StarSignal signal = new StarSignal();
+
+		if(this.getMapId() == mapId && this.getPosition().equals(heroPosition)){
+			signal.mapPresent();
+		}
+
+		return signal;
+	}
+	
 	public abstract void setDirection(String direction);
 	public abstract String getDirection();
 	
@@ -111,6 +128,6 @@ public abstract class Map implements Cloneable {
 	
 	public abstract String getType();
 	
-	public abstract StarSignal showSignal(int mapId, Position heroPosition);
+	
  
 }

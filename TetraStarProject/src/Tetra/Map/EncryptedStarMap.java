@@ -31,38 +31,32 @@ public class EncryptedStarMap extends Map {
 	}
 	
 	@Override
-	public int getMapId() {
-		// TODO Auto-generated method stub
+	public String getMapId() {
 		return map.getMapId();
 	}
 	
 	@Override
 	public void setPositionId(String positionId) {
-		// TODO Auto-generated method stub
 		map.setPositionId(positionId);
 	}
 	
 	@Override
 	public String getPositionId() {
-		// TODO Auto-generated method stub
 		return map.getPositionId();
 	}
 	
 	@Override
 	public void setItemCount(int itemCount) {
-		// TODO Auto-generated method stub
 		map.setItemCount(itemCount);
 	}
 	
 	@Override
 	public int getItemCount() {
-		// TODO Auto-generated method stub
 		return map.getItemCount();
 	}
 	
 	@Override
 	public void setDirection(String direction) {
-		// TODO Auto-generated method stub
 		map.setDirection(direction);
 	}
 	
@@ -154,7 +148,7 @@ public class EncryptedStarMap extends Map {
 	
 	
 	@Override
-	public StarSignal showSignal(int mapId, Position heroPosition) {
+	public StarSignal showSignal(String mapId, Position heroPosition) {
 		// TODO Auto-generated method stub
 		return map.showSignal(mapId, heroPosition);
 	}

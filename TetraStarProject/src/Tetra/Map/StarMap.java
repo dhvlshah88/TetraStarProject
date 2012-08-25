@@ -7,8 +7,8 @@ public class StarMap extends Map {
 
 	private String direction;
 	
-	public StarMap(Position currentPosition){
-		super(currentPosition);
+	public StarMap(Position currentPosition, String mapId){
+		super(currentPosition, mapId);
 	}
 
 	public void setDirection(String direction){
@@ -22,15 +22,6 @@ public class StarMap extends Map {
 	public String getType(){
 		return "StarMap";
 	}
-	
-	@Override
-	public StarSignal showSignal(int mapId, Position heroPosition) {
-		if(super.getMapId() == mapId && super.getPosition().equals(heroPosition)){
-			
-		}
-		return null;
-	}
-	
 	
 	//Given below are the empty method stub which are implemented in EncryptedStarMap, i.e. Decorator
 	

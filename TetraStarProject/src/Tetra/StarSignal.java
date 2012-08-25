@@ -11,16 +11,22 @@ import java.awt.Color;
  */
 public class StarSignal {
 
-	private boolean mapPresent;
+	private boolean mapPresent = false;
 	
-	/*
-	 * Constructor initializes boolean value depending whether the map is present in vaderbase.
+	/**
+	 * Default Constructor 
 	 */
-	public StarSignal(boolean mapPresent){
-		this.mapPresent = mapPresent;
+	public StarSignal(){
 	}
 	
-	/*
+	/**
+	 * This method sets mapPresent variable true when map is found in vaderbase.
+	 */
+	public void mapPresent(){
+		this.mapPresent = true;;
+	}
+	
+	/**
 	 * This method returns green color when map is present at vaderbase else returns red color.
 	 */
 	public Color getSignalColor(){

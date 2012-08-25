@@ -12,8 +12,8 @@ public class StarAtlas extends Map {
 	private ArrayList<Map> mapList = null;
 	private int mapCount = 0;
 
-	public StarAtlas(Position currentPosition){
-		super(currentPosition);
+	public StarAtlas(Position currentPosition, String mapId){
+		super(currentPosition, mapId);
 	}
 
 	/*
@@ -66,13 +66,6 @@ public class StarAtlas extends Map {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public StarSignal showSignal(int mapId, Position heroPosition) {
-
-		return null;
-	}
-
 
 	@Override
 	public void setTHeroId(String tHeroId) {
