@@ -7,12 +7,8 @@ public class StarMap extends Map {
 
 	private String direction;
 	
-	public StarMap(){
-		
-	}
-	
-	public StarMap(int itemCount, Position currentPosition){
-		super(itemCount, currentPosition);
+	public StarMap(Position currentPosition){
+		super(currentPosition);
 	}
 
 	public void setDirection(String direction){

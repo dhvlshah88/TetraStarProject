@@ -23,10 +23,10 @@ public abstract class Map implements Cloneable {
 	 * Initialize values of Map instance.
 	 */
 	
-	public Map(int itemCount, Position currentPosition){
+	public Map(Position currentPosition){
 		mapId++;
 		this.locationId = currentPosition.getPositionId();
-		this.itemCount = itemCount;
+		this.itemCount = 0;
 		this.currentPosition = currentPosition;
 	}
 	
