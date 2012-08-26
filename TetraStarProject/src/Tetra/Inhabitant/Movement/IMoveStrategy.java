@@ -3,7 +3,6 @@
  */
 package Tetra.Inhabitant.Movement;
 
-import Tetra.Direction;
 import Tetra.Position;
 
 /**

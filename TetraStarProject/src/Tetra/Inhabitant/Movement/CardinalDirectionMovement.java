@@ -5,7 +5,6 @@ package Tetra.Inhabitant.Movement;
 
 import java.util.Random;
 
-import Tetra.Direction;
 import Tetra.Position;
 
 /**
