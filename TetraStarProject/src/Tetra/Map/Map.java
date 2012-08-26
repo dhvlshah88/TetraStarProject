@@ -127,7 +127,6 @@ public abstract class Map implements Cloneable {
 	public abstract void setEncrypted(boolean encrypted);
 	
 	public abstract String getType();
-	
-	
- 
+	public abstract String getImageFilePath();
+
 }
