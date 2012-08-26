@@ -1,8 +1,8 @@
 package Tetra.Inhabitant;
 
-import Tetra.IMoveStrategy;
 import Tetra.Location;
 import Tetra.TFace;
+import Tetra.Inhabitant.Movement.IMoveStrategy;
 
 
 public class TRovers {

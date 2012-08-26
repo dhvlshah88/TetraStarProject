@@ -16,23 +16,27 @@ public class THeroBase extends Base {
 
 	private ArrayList<Map> cloneMapList = null;
 	
-	/*
+	/**
 	 * Default Constructor.
 	 */
 	public THeroBase(){
 
 	}
 
+	/**
+	 * 
+	 * @param basePosition
+	 */
 	public THeroBase(Position basePosition) {
-		super(basePosition);
+		super(basePosition, "HB");
 		cloneMapList = new ArrayList<Map>();
 	}
-
-	/*
+	
+	/**
 	 * 
+	 * @param cloneMapInstance
 	 */
-	public void addClonedMap(Map cloneMapInstance){
-		//if(!isMapEmpty(cloneMapInstance)){
+	public void addMap(Map cloneMapInstance){
 		if(cloneMapInstance == null){
 			return;
 		}
@@ -46,14 +50,17 @@ public class THeroBase extends Base {
 		return false;
 	} */
 
-	/*
-	 * (non-Javadoc)
-	 * @see Tetra.Base.Base#baseType()
+	
+	/**
+	 * @return
 	 */
 	public String baseType(){
 		return "HeroBase";
 	}
 
+	/**
+	 * @return
+	 */
 	@Override
 	public String getImageFilePath() {
 		// TODO Auto-generated method stub

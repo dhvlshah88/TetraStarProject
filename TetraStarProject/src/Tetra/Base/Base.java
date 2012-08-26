@@ -13,12 +13,15 @@ public abstract class Base {
 
 	private Position basePosition = null;
 	
+	private String baseId = null;
+	
 	public Base(){
 		
 	}
 	
-	public Base(Position basePosition){
+	public Base(Position basePosition, String baseId){
 		this.basePosition = basePosition;
+		this.baseId = baseId.concat(basePosition.toString());
 	}
 	
 	public void setBasePosition(Position basePosition){
@@ -29,7 +32,10 @@ public abstract class Base {
 		return basePosition;
 	}
 
-
+	public String getBaseId(){
+		return baseId;
+	}
+	
 	public abstract String baseType();
 	public abstract String getImageFilePath();
 	
