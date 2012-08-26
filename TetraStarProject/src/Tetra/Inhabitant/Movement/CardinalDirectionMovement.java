@@ -15,13 +15,21 @@ public class CardinalDirectionMovement implements IMoveStrategy {
 	
 	private Random randomGenerator;
 	private Direction movementDirection;
+	private int rowNo;
+	private int columnNo;
+	private int randNumber;
+	private int MAX_ROWS;
+	private int MAX_COLUMNS;
+	
 	
 	/**
 	 * Default Constructor.
 	 */
-	public CardinalDirectionMovement() {
+	public CardinalDirectionMovement(int maximumRows, int maximumColumns) {
 		randomGenerator = new Random();
 		movementDirection = Direction.NORTH;
+		MAX_ROWS = maximumRows;
+		MAX_COLUMNS = maximumColumns;
 	}
 	
 	public Direction getDirection(){
@@ -30,10 +38,19 @@ public class CardinalDirectionMovement implements IMoveStrategy {
 	
 	public Position getNewPosition(Position currentPosition){
 		Position newPosition = null;
-		int rowNo = currentPosition.getRowNo();
-		int columnNo = currentPosition.getColumnNo();
+		rowNo = currentPosition.getRowNo();
+		columnNo = currentPosition.getColumnNo();
 		
-		int randNumber = randomGenerator.nextInt(4);
+		randNumber = randomNumberGenerator();
+		
+		//Below two conditions ignores all the position outside the grid.
+		while(rowNo == 0 && randNumber == 0 || columnNo == 0 && randNumber == 3){
+			randNumber = randomNumberGenerator();
+		}
+		
+		while(rowNo == MAX_ROWS && randNumber == 2 || columnNo == MAX_COLUMNS && randNumber == 1){
+			randNumber = randomNumberGenerator();
+		}
 		
 		switch (randNumber) {
 		case 0:
@@ -63,6 +80,10 @@ public class CardinalDirectionMovement implements IMoveStrategy {
 		return newPosition;
 	}
 
+	@Override
+	public int randomNumberGenerator() {
+		return randomGenerator.nextInt(4);
+	}
 	
 	
 }

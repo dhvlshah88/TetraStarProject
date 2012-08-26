@@ -16,4 +16,7 @@ public interface IMoveStrategy {
 	
 	//
 	public Position getNewPosition(Position currentPosition);
+	
+	//
+	public int randomNumberGenerator();
 }
