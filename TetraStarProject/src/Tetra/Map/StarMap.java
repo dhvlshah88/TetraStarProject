@@ -1,7 +1,6 @@
 package Tetra.Map;
 
 import Tetra.Position;
-import Tetra.StarSignal;
 
 public class StarMap extends Map {
 
@@ -34,7 +33,7 @@ public class StarMap extends Map {
 	@Override
 	public String getTHeroId() {
 		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 	
 	@Override
@@ -64,13 +63,12 @@ public class StarMap extends Map {
 	@Override
 	public void setSymbol(String symbol) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public String getSymbol() {
 		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	@Override
@@ -83,6 +81,11 @@ public class StarMap extends Map {
 	public void setEncrypted(boolean encrypted) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public String getImageFilePath() {
+		return "src/images/StarMap.jpg";
 	}
      
      

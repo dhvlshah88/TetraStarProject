@@ -101,7 +101,7 @@ public class EncryptedStarMap extends Map {
 	}
 	
 	public String getTHeroId(){
-		String prevTheroId = map.getTHeroId();
+		String prevTheroId = map.getTHeroId().trim();
 		return (prevTheroId.isEmpty() ? prevTheroId : prevTheroId + ", ") + tHeroId;
 	}
 	
@@ -151,5 +151,11 @@ public class EncryptedStarMap extends Map {
 	public StarSignal showSignal(String mapId, Position heroPosition) {
 		// TODO Auto-generated method stub
 		return map.showSignal(mapId, heroPosition);
+	}
+	
+	@Override
+	public String getImageFilePath() {
+		int endIndex = map.getImageFilePath().indexOf(".jpg");
+		return map.getImageFilePath().substring(0, endIndex) + "Encrypted.jpg";
 	}
 }
