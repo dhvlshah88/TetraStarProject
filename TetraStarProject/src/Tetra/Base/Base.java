@@ -11,7 +11,7 @@ import Tetra.Position;
  */
 public abstract class Base {
 
-	private Position basePosition = null;
+	private Position currentPosition = null;
 	
 	private String baseId = null;
 	
@@ -20,23 +20,23 @@ public abstract class Base {
 	}
 	
 	public Base(Position basePosition, String baseId){
-		this.basePosition = basePosition;
+		this.currentPosition = basePosition;
 		this.baseId = baseId.concat(basePosition.toString());
 	}
 	
-	public void setBasePosition(Position basePosition){
-		this.basePosition = basePosition;
+	public void setPosition(Position basePosition){
+		this.currentPosition = basePosition;
 	}
 	
-	public Position getBasePosition(){
-		return basePosition;
+	public Position getPosition(){
+		return currentPosition;
 	}
 
 	public String getBaseId(){
 		return baseId;
 	}
 	
-	public abstract String baseType();
+	public abstract String getType();
 	public abstract String getImageFilePath();
 	
 	

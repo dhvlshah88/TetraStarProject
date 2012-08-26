@@ -23,7 +23,7 @@ public class NullBase extends Base {
 	 * @see Tetra.Base.Base#baseType()
 	 */
 	@Override
-	public String baseType() {
+	public String getType() {
 		return null;
 	}
 

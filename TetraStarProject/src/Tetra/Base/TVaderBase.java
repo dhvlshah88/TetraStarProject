@@ -97,7 +97,7 @@ public class TVaderBase extends Base {
 	 * (non-Javadoc)
 	 * @see Tetra.Base.Base#baseType()
 	 */
-	public String baseType(){
+	public String getType(){
 		return "VaderBase";
 	}
 

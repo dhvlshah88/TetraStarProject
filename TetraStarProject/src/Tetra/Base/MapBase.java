@@ -63,7 +63,7 @@ public class MapBase extends Base {
 	}*/
 
 
-	public String baseType(){
+	public String getType(){
 		return "MapBase";
 	}
 

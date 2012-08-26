@@ -54,7 +54,7 @@ public class THeroBase extends Base {
 	/**
 	 * @return
 	 */
-	public String baseType(){
+	public String getType(){
 		return "HeroBase";
 	}
 

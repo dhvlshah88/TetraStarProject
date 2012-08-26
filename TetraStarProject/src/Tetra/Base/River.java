@@ -29,7 +29,7 @@ public class River extends Base {
 	/**
 	 * 
 	 */
-	public String baseType(){
+	public String getType(){
 		return "River";
 	}
 	
