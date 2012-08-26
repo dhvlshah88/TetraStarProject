@@ -24,4 +24,12 @@ public class TVader extends TRovers {
 	public String getType(){
 		return "TVader";
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getImageFilePath(){
+		return "src/images/Megatron.jpg";
+	}
 }

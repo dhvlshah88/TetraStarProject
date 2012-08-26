@@ -28,4 +28,10 @@ public class THeroWithTFlier extends TRovers {
 	public String getType() {
 		return thero.getType() + "WithTFlier";
 	}
+	
+	@Override
+	public String getImageFilePath() {
+		int endIndex = super.getImageFilePath().indexOf(".jpg");
+		return super.getImageFilePath().substring(0, endIndex) + "WithTFlier.jpg";
+	}
 }

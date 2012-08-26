@@ -5,11 +5,10 @@ package Tetra.Inhabitant;
 
 import Tetra.Location;
 import Tetra.TFace;
-import Tetra.Map.Map;
 
 /**
- * @author pranav
- *
+ * @author Pranav
+ * This is null object. This object implements NULL OBJECT PATTERN
  */
 public class NullTRover extends TRovers {
 
@@ -19,9 +18,10 @@ public class NullTRover extends TRovers {
 	public NullTRover() {
 	}
 
-	/**
-	 * @param name
+	/*
+	 * Below are the do nothing methods.
 	 */
+	
 	@Override
 	public void setName(String name){
 	}
@@ -54,21 +54,13 @@ public class NullTRover extends TRovers {
 		return null;
 	}
 
-	/**
-	 * @return the loc
-	 */
 	@Override
 	public Location getLocation() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * @param loc the loc to set
-	 */
 	@Override
 	public void setLocation(Location currentLocation) {
-
 	}
 	
 	@Override
@@ -78,7 +70,11 @@ public class NullTRover extends TRovers {
 
 	@Override
 	public void setTface(TFace tface) {
-		
+	}
+	
+	@Override
+	public String getImageFilePath() {
+		return null;
 	}
 
 	

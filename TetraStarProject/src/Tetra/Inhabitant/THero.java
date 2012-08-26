@@ -93,11 +93,17 @@ public class THero extends TRovers {
 		this.clonedMap = map.clone();
 	}
 
-	
-	
 	@Override
 	public String getType() {
 		return "THero";
 	}
 
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getImageFilePath(){
+		return "src/images/Optimus.jpg";
+	}
 }

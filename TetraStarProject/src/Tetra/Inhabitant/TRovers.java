@@ -147,4 +147,12 @@ public class TRovers {
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getImageFilePath(){
+		return "src/images/BumbleBee.jpg";
+	}
+	
 }
