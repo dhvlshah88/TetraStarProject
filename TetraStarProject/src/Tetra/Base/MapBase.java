@@ -12,7 +12,8 @@ import Tetra.Map.Map;
 public class MapBase extends Base {
 
 	private Map mapInstance = null;
-	//private String mapType;
+	
+	private String mapId = null;
 	private boolean mapPresent = false;
 
 	public MapBase(){
@@ -30,11 +31,27 @@ public class MapBase extends Base {
 		}
 		
 		this.mapInstance = mapInstance;
+		this.mapId = mapInstance.getMapId();
 		mapPresent = true;
 	}
 
 	public Map getMap(){
 		return mapInstance;
+	}
+	
+	public Map removeMap(){
+		if(!mapPresent){
+			return null;
+		}
+		
+		Map tempMap = mapInstance;
+		mapInstance = null;
+		mapPresent = false;
+		return tempMap;
+	}
+	
+	public String getMapId(){
+		return mapId;
 	}
 
 	public boolean isMapEmpty(Map mapInstance){

@@ -65,7 +65,7 @@ public class TVaderBase extends Base {
 	 * @return
 	 */
 	public Map removeMap(){
-		if(stolenMapInstance == null){
+		if(!stolenMapPresent){
 			return null;
 		}
 
