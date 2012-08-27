@@ -2,7 +2,6 @@ package TetraGUI;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -16,135 +15,151 @@ import java.awt.SystemColor;
 
 import Tetra.Map.Map;
 import Tetra.Map.StarAtlas;
+
 import java.awt.GridLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.Color;
 
 
-public class StarAtlasView extends JFrame {
+public class StarAtlasView extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4118310718783060784L;
 	private JPanel contentPane;
 	private JLabel lblStar;
 	private JPanel panel_StarMapContainer;
-	private JLabel lblStarAtlasID;
+	private JLabel lblStarAtlasId_1;
 	private JLabel lblStarAtlasId;
-	private JLabel lblCount;
-	private JLabel lblLocation;
+	private JLabel lblNoOfItems_1;
+	private JLabel lblLocationId_1;
 	private JLabel lblNoOfItems;
-	private JLabel lblPositionid;
-	Map map=null;
+	private JLabel lblLocationId;
 	StarAtlas starAtlas = null;
-	
+
 	/**
 	 * Create the frame.
 	 */
-	public StarAtlasView(StarAtlas atlas) {
-		starAtlas=atlas;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public StarAtlasView() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StarAtlasView.class.getResource("/images/StarAtlas.png")));
+
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 596, 376);
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setContentPane(contentPane);
-		atlas.getMapId();
 		JPanel panel = new JPanel();
-		panel.setBackground(UIManager.getColor("Button.select"));
-		
+		panel.setBackground(Color.LIGHT_GRAY);
+
 		panel_StarMapContainer = new JPanel();
 		panel_StarMapContainer.setBackground(SystemColor.window);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(panel_StarMapContainer, GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
-					.addGap(12))
-				.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+				.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(panel_StarMapContainer, GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(panel_StarMapContainer, GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+					.addComponent(panel_StarMapContainer, GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
 					.addContainerGap())
 		);
-		
-		
+
+
 		panel_StarMapContainer.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		lblStarAtlasID = new JLabel("starAtlasMessage");
-		
-		lblStarAtlasId = new JLabel("Star Atlas ID : ");
-		
-		lblCount = new JLabel("count");
-		lblLocation = new JLabel("location");
-		
+
+		lblStarAtlasId = new JLabel("Star Atlas ID: ");
+		lblStarAtlasId.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+		lblStarAtlasId_1 = new JLabel();
+		lblStarAtlasId_1.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+
+
 		lblNoOfItems = new JLabel("No. of Items");
-		
-		lblPositionid = new JLabel("LocationID:");
+		lblNoOfItems.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+		lblNoOfItems_1 = new JLabel();
+		lblNoOfItems_1.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+
+		lblLocationId = new JLabel("LocationID:");
+		lblLocationId.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+		lblLocationId_1 = new JLabel();
+		lblLocationId_1.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(9)
-					.addComponent(lblStarAtlasId)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblStarAtlasID)
-					.addGap(50)
-					.addComponent(lblPositionid)
+					.addComponent(lblStarAtlasId, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblLocation)
-					.addPreferredGap(ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+					.addComponent(lblStarAtlasId_1, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+					.addGap(22)
+					.addComponent(lblLocationId)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblLocationId_1, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
 					.addComponent(lblNoOfItems)
-					.addGap(18)
-					.addComponent(lblCount, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-					.addGap(24))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblNoOfItems_1, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+					.addGap(36))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblStarAtlasID)
-						.addComponent(lblStarAtlasId)
-						.addComponent(lblCount, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNoOfItems)
-						.addComponent(lblPositionid)
-						.addComponent(lblLocation))
-					.addContainerGap(46, Short.MAX_VALUE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblStarAtlasId_1, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNoOfItems_1, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblStarAtlasId)
+							.addComponent(lblNoOfItems)
+							.addComponent(lblLocationId)
+							.addComponent(lblLocationId_1, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(47, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
-		
-		setValues(atlas);
-		}
 
-	private void setValues(StarAtlas atlas){
-	
-		lblStarAtlasID.setText(atlas.getMapId()+"");
-		lblCount.setText( atlas.getItemCount() + "" );
-		lblLocation.setText(atlas.getPositionId());
+	}
 
-		for(final Map map : atlas.getStarMapList()){
+	private void setValues(StarAtlas starAtlas){
+
+		lblStarAtlasId_1.setText(starAtlas.getMapId()+"");
+		lblNoOfItems_1.setText( starAtlas.getItemCount() + "" );
+		lblLocationId_1.setText(starAtlas.getPositionId());
+
+		for(final Map map : starAtlas.getStarMapList()){
 			JPanel star = new JPanel();
 
-			lblStar = new JLabel( (new ImageIcon("src/images/starImage.jpg") ));
+			lblStar = new JLabel( (new ImageIcon("src/images/StarMap.jpg") ));
 			star.add(lblStar);
-			
+
 			star.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					try {
-						StarMapView dialog = new StarMapView(map);
-						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-						dialog.setVisible(true);
+						StarMapView starMapViewDialog = new StarMapView();
+						starMapViewDialog.setStarMap(map);
+						starMapViewDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						starMapViewDialog.setVisible(true);
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}	
-		
+
 				}
 			});
-		
+
 			panel_StarMapContainer.add(star);
 		}
 
 	}
 
+	public void setStarAtlas(StarAtlas starAtlas){
+		this.starAtlas = starAtlas;
+		this.setValues(starAtlas);
+	}
 }
