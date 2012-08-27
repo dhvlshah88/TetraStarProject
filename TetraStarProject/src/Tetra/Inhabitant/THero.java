@@ -6,6 +6,9 @@ package Tetra.Inhabitant;
 import Tetra.Map.EncryptedStarMap;
 import Tetra.Map.IEncrytionStrategy;
 import Tetra.Map.Map;
+import Tetra.Map.StarAtlas;
+import TetraGUI.StarAtlasView;
+import TetraGUI.StarMapView;
 
 
 /**
@@ -14,20 +17,14 @@ import Tetra.Map.Map;
  */
 public class THero extends TRovers {
 
-
-	//A method to encrypt map/atlas.
-	//A method to decrypt map/atlas.
-	//A method to make a clone of stolen map.
-	//A method to get Tflier.
-	//A method to display map.
-	//A method to move to a location 
-
 	private IEncrytionStrategy eStrategy;
 	private Map map;
 	private Map clonedMap;
 	private boolean mapPresent = false;
+	private boolean clonedMapPresent = false;
+	private String mapId = null;
 
-	/*
+	/**
 	 * Default Constructor 
 	 */
 	public THero(){
@@ -48,7 +45,7 @@ public class THero extends TRovers {
 
 
 	public Map encryptMap(Map map){
-		if(!isMapPresent()){
+		if(!mapPresent){
 			this.map = new EncryptedStarMap(map, getEncryptionStrategy(), getTetId(), "", 0, "");
 			this.map.setEncrypted(true);
 		}
@@ -56,8 +53,9 @@ public class THero extends TRovers {
 	}
 
 	public void setMap(Map map){
-		if(map != null){
+		if(map != null && !mapPresent){
 			this.map = map;
+			this.mapId = map.getMapId();
 			mapPresent = true;
 		}
 	}
@@ -65,28 +63,33 @@ public class THero extends TRovers {
 	public Map getMap(){
 		return map;
 	}
-	
+
 	public Map returnMap(){
+		if(!mapPresent){
+			return null;
+		}
+
 		Map tempMap;
 		tempMap = map;
-		initializeMap();
+		this.map = null;
+		mapPresent = false;
 		return tempMap;
 	}
-	
+
 	public Map returnClonedMap(){
 		Map tempMap;
 		tempMap = clonedMap;
 		clonedMap = null;
 		return tempMap;
 	}
-	
-	private void initializeMap(){
-		this.map = null;
-		mapPresent = false;
-	}
-	
+
+
 	public boolean isMapPresent(){
 		return mapPresent;
+	}
+
+	public boolean isCloneMapPresent(){
+		return clonedMapPresent;
 	}
 
 	public void cloneMap(Map map) throws CloneNotSupportedException{
@@ -98,7 +101,19 @@ public class THero extends TRovers {
 		return "THero";
 	}
 
-	
+	public void displayMap(Map map){
+		String mapType = map.getType();
+		if( mapType == "StarMap" || mapType == "EncryptedStarMap"){
+			StarMapView starMapView = new StarMapView();
+			starMapView.setStarMap(map);
+		}else{
+			StarAtlasView starAtlasView = new StarAtlasView();
+			starAtlasView.setStarAtlas((StarAtlas)map);
+		}
+	}
+
+
+
 	/**
 	 * 
 	 * @return
