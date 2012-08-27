@@ -3,6 +3,7 @@
  */
 package Tetra.Inhabitant;
 
+import Tetra.Position;
 import Tetra.Map.EncryptedStarMap;
 import Tetra.Map.IEncrytionStrategy;
 import Tetra.Map.Map;
@@ -31,10 +32,26 @@ public class THero extends TRovers {
 
 	}
 
-	public THero(String name, String tetId, String gender){
-		super(name, tetId, gender);
+	public THero(Position currentPosition){
+		super(currentPosition);
 	}
 
+	public void setMap(Map map){
+		if(map != null && !mapPresent){
+			this.map = map;
+			this.mapId = map.getMapId();
+			mapPresent = true;
+		}
+	}
+
+	public Map getMap(){
+		return map;
+	}
+	
+	public String getMapId(){
+		return mapId;
+	}
+	
 	public void setEncryptionStrategy(IEncrytionStrategy eStrategy){
 		this.eStrategy = eStrategy;
 	}
@@ -52,17 +69,6 @@ public class THero extends TRovers {
 		return this.map;
 	}
 
-	public void setMap(Map map){
-		if(map != null && !mapPresent){
-			this.map = map;
-			this.mapId = map.getMapId();
-			mapPresent = true;
-		}
-	}
-
-	public Map getMap(){
-		return map;
-	}
 
 	public Map returnMap(){
 		if(!mapPresent){

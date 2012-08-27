@@ -1,17 +1,18 @@
 package Tetra.Inhabitant;
 
-import Tetra.Location;
+import Tetra.ILocatable;
+import Tetra.Position;
 import Tetra.TFace;
 import Tetra.Inhabitant.Movement.IMoveStrategy;
 
 
-public class TRovers {
+public class TRovers implements ILocatable {
 
 	private String gender;
 	private String tetId;
 	private String name;
-	private Location currentLocation;
-	private Location vaderBaseLocation;
+	private Position currentPosition;
+	private Position vaderBaseLocation;
 	private TFace tface;
 	private IMoveStrategy movementStrategy;
 	
@@ -23,15 +24,11 @@ public class TRovers {
 	}
 	
 	/**
-	 * This is a constructor
-	 * @param name
-	 * @param tetId
-	 * @param gender
+	 * Parameterized Constructor
+	 * @param currentPosition denotes <i>current position of TRover.</i>
 	 */
-	public TRovers(String name, String tetId, String gender){
-		this.name = name;
-		this.tetId = tetId;
-		this.gender = gender;
+	public TRovers(Position currentPosition){
+		this.currentPosition = currentPosition;
 	}
 	/**
 	 * @param name
@@ -84,31 +81,24 @@ public class TRovers {
 	 * 
 	 * @return
 	 */
-	public Location getVaderBase() {
+	public Position getVaderBase() {
 		return vaderBaseLocation;
 	}
 
-	/**
-	 * @return
-	 */
-	public Location getLocation() {
-		return currentLocation;
-	}
 	
 	/**
 	 * 
-	 * @param currentLocation
+	 * @param currentPosition
 	 */
-	public void setLocation(Location currentLocation) {
-		this.currentLocation = currentLocation;
+	public void setPosition(Position currentPosition) {
+		this.currentPosition = currentPosition;
 	}
 	
 	/**
-	 * 
 	 * @return
 	 */
-	public TFace getTface() {
-		return tface;
+	public Position getPosition() {
+		return currentPosition;
 	}
 	
 	/**
@@ -119,12 +109,13 @@ public class TRovers {
 		this.tface = tface;
 	}
 	
+
 	/**
 	 * 
 	 * @return
 	 */
-	public String getType(){
-		return "TRover";
+	public TFace getTface() {
+		return tface;
 	}
 	
 	/**
@@ -143,8 +134,16 @@ public class TRovers {
 		return movementStrategy;
 	}
 	
-	public void moveToLocation(Location nextLocation){
+	public void moveToLocation(Position nextLocation){
 		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getType(){
+		return "TRover";
 	}
 	
 	/**

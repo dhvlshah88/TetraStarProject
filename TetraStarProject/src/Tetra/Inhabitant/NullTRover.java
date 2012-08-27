@@ -3,11 +3,11 @@
  */
 package Tetra.Inhabitant;
 
-import Tetra.Location;
+import Tetra.Position;
 import Tetra.TFace;
 
 /**
- * @author Pranav
+ * @author Dhaval
  * This is null object. This object implements NULL OBJECT PATTERN
  */
 public class NullTRover extends TRovers {
@@ -15,7 +15,7 @@ public class NullTRover extends TRovers {
 	/**
 	 * 
 	 */
-	public NullTRover() {
+	public NullTRover(Position currentPosition) {
 	}
 
 	/*
@@ -50,19 +50,20 @@ public class NullTRover extends TRovers {
 	}
 
 	@Override
-	public Location getVaderBase() {
+	public Position getVaderBase() {
 		return null;
-	}
-
-	@Override
-	public Location getLocation() {
-		return null;
-	}
-
-	@Override
-	public void setLocation(Location currentLocation) {
 	}
 	
+	@Override
+	public void setPosition(Position currentPosition) {
+	
+	}
+
+	@Override
+	public Position getPosition() {
+		return null;
+	}
+
 	@Override
 	public TFace getTface() {
 		return null;

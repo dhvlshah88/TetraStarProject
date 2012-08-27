@@ -3,6 +3,8 @@
  */
 package Tetra.Inhabitant;
 
+import Tetra.Position;
+
 
 /**
  * @author Dhaval
@@ -17,8 +19,8 @@ public class TVader extends TRovers {
 	
 	}
 	
-	public TVader(String name, String tetId, String gender){
-		super(name, tetId, gender);
+	public TVader(Position currentPosition){
+		super(currentPosition);
 	}
 	
 	public String getType(){

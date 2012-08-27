@@ -1,8 +1,9 @@
 package Tetra.Inhabitant.Vehicle;
 
+import Tetra.ILocatable;
 import Tetra.Position;
 
-public abstract class Vehicle {
+public abstract class Vehicle implements ILocatable {
 	
 	private String vehicleId;
 	private Position currentPosition;

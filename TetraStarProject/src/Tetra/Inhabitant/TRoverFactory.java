@@ -3,6 +3,8 @@
  */
 package Tetra.Inhabitant;
 
+import Tetra.Position;
+
 
 
 /**
@@ -10,25 +12,25 @@ package Tetra.Inhabitant;
  *
  */
 public class TRoverFactory {
+
 	private TVader tVader=null;
 
-
-	public TRovers createTRover(String type){
+	public TRovers createTRover(String type, Position currentPosition){
 
 		TRovers tRover=null;
 		if (type.equals("TRover")) {
-			tRover = new TRovers("TRover", "", "");
+			tRover = new TRovers(currentPosition);
 		} else if (type.equals("THero")) {
-			tRover = new THero("THero", "", "");
+			tRover = new THero(currentPosition);
 		} else if (type.equals("TVader")) {
-			tRover = createTVaderIfNotPresent();
+			tRover = createTVaderIfNotPresent(currentPosition);
 		}
 		return tRover;
 	}
 
-	private TVader createTVaderIfNotPresent(){
+	private TVader createTVaderIfNotPresent(Position currentPosition){
 		if(tVader==null){
-			tVader=new TVader("Megatron", "", "");
+			tVader=new TVader(currentPosition);
 		}
 
 		return tVader;
