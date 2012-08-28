@@ -47,13 +47,13 @@ public class Position {
 	}
 	
 	/**
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
 	 * 
 	 * This methods returns true when row and column number of other position object matches with this position 
 	 * object's row and column number.
-	 * @param objPosition
-	 * @return boolean 
+	 * @param  objPosition
+	 * @return <code>true</code>  if <code>objPosition</code> is at the
+     *                            same row and column as the current position instance;
+     *                            <code>false</code> otherwise
 	 */
 	public boolean equals(Object objPosition){
 		
@@ -68,10 +68,11 @@ public class Position {
 	
 	/**
 	 * This overridden method returns string containing row and column number together.
-	 * @return String
+	 * @return String indicating the row and column of the
+     *                position in (row, column) format
 	 */
 	@Override
 	public String toString() {
-		return Integer.toString(rowNo) + Integer.toString(columnNo);
+		return Integer.toString(rowNo).concat(Integer.toString(columnNo));
 	}
 }
