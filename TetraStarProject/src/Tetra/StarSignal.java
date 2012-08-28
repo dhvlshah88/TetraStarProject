@@ -20,10 +20,14 @@ public class StarSignal {
 	}
 	
 	/**
-	 * This method sets mapPresent variable true when map is found in vaderbase.
+	 * This method sets mapPresent variable to true when map is found in vaderbase.
 	 */
-	public void mapPresent(){
+	public void setMapPresent(){
 		this.mapPresent = true;
+	}
+	
+	public boolean isMapIdentical(){
+		return mapPresent;
 	}
 	
 	/**
