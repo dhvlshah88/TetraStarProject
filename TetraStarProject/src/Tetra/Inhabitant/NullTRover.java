@@ -50,7 +50,7 @@ public class NullTRover extends TRovers {
 	}
 
 	@Override
-	public Position getVaderBase() {
+	public Position getVaderBasePosition() {
 		return null;
 	}
 	

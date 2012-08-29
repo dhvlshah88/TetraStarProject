@@ -1,11 +1,14 @@
 package Tetra.Map;
 
+import java.util.ArrayList;
+
+import Tetra.ILocatable;
 import Tetra.Position;
 import Tetra.StarSignal;
 
 
 
-public abstract class Map implements Cloneable {
+public abstract class Map implements Cloneable, ILocatable {
 
 	private String mapId = null;
 	private String locationId;
@@ -88,21 +91,29 @@ public abstract class Map implements Cloneable {
 	 */
 	@Override
 	public Map clone() throws CloneNotSupportedException {
-		return (Map) super.clone();
+		Map map = null;
+		if(this.getType() == "StarMap"){
+			map = new StarMap(this.getPosition(), this.getMapId());
+			map.setDirection(this.getDirection());
+		}else{
+			map = new StarAtlas(this.getPosition(), this.getMapId());
+			map.setStarMapList(this.getStarMapList());
+		}
+		return map;
 	}
 	
 	/**
 	 * 
 	 * @param mapId
 	 * @param heroPosition
-	 * @return {@link StarMap}
+	 * @return {@link StarSignal}
 	 * 
 	 */
-	public  StarSignal showSignal(String mapId, Position heroPosition){
+	public  StarSignal showSignal(String mapId){
 		StarSignal signal = new StarSignal();
 
-		if(this.getMapId() == mapId && this.getPosition().equals(heroPosition)){
-			signal.mapPresent();
+		if(this.getMapId() == mapId){
+			signal.setMapPresent();
 		}
 
 		return signal;
@@ -119,6 +130,9 @@ public abstract class Map implements Cloneable {
 	
 	public abstract void setRestorationCounter(int restorationCounter);
 	public abstract int getRestorationCounter();
+	
+	public abstract void setStarMapList(ArrayList<Map> mapList);
+	public abstract ArrayList<Map> getStarMapList();
 	
 	public abstract void setSymbol(String symbol);
 	public abstract String getSymbol();

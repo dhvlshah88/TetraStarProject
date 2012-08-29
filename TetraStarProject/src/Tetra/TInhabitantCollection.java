@@ -4,6 +4,7 @@
 package Tetra;
 
 import java.util.HashMap;
+import java.util.Observable;
 
 import Tetra.Inhabitant.TRovers;
 
@@ -11,11 +12,11 @@ import Tetra.Inhabitant.TRovers;
  * @author Dhaval
  *
  */
-public class LocatableCollection {
+public class TInhabitantCollection extends Observable{
 
 	private HashMap<Position, ILocatable> inhabitantCollection = null;
 
-	public LocatableCollection(){
+	public TInhabitantCollection(){
 		inhabitantCollection = new HashMap<Position, ILocatable>();
 	}
 
@@ -46,6 +47,7 @@ public class LocatableCollection {
 		}
 
 		inhabitantCollection.put(ilocatablePosition, currentLocatable);
+		locatableChanged(currentLocatable);
 		return true;
 	}
 
@@ -70,6 +72,7 @@ public class LocatableCollection {
 		}*/
 		inhabitantCollection.put(nextPosition, locatableInstance);
 		inhabitantCollection.remove(currentPosition);
+		locatableChanged(locatableInstance);
 		return true;	
 	}
 
@@ -84,6 +87,25 @@ public class LocatableCollection {
 		}
 
 		return inhabitantCollection.get(nextPosition);
+	}
+	
+	
+	public HashMap<Position, ILocatable> getLocatable(){
+		return inhabitantCollection;
+	}
+	
+	public void removeLocatableAtPosition(Position nextPosition){
+		if(nextPosition == null){
+			return;
+		}
+		
+		inhabitantCollection.remove(nextPosition);
+		locatableChanged(null);
+	}
+	
+	public void locatableChanged(ILocatable locatableObj){
+		setChanged();
+		notifyObservers(locatableObj);
 	}
 
 }

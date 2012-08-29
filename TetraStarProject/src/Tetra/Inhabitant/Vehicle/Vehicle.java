@@ -2,12 +2,16 @@ package Tetra.Inhabitant.Vehicle;
 
 import Tetra.ILocatable;
 import Tetra.Position;
+import Tetra.TFace;
+import Tetra.Inhabitant.Movement.IMovementStrategy;
 
 public abstract class Vehicle implements ILocatable {
 	
 	private String vehicleId;
 	private Position currentPosition;
 	private boolean vehiclePossessed = false;
+	private IMovementStrategy movementStrategy = null;
+	private TFace tfaceObj = null;
 	
 	/**
 	 * Default Constructor.
@@ -20,8 +24,25 @@ public abstract class Vehicle implements ILocatable {
 	 * Parameterized constructor.
 	 * @param vehicleId
 	 */
-	public Vehicle(String vehicleId){
+	public Vehicle(TFace tfaceObj, String vehicleId){
+		this.tfaceObj = tfaceObj;
 		this.vehicleId = vehicleId;
+	}
+	
+	/**
+	 * 
+	 * @param tfaceObj
+	 */
+	public void setTface(TFace tfaceObj){
+		this.tfaceObj = tfaceObj;
+	}
+	
+	/**
+	 * 
+	 * @return {@link TFace} - TFace object
+	 */
+	public TFace getTface(){
+		return tfaceObj;
 	}
 	
 	/**
@@ -73,10 +94,26 @@ public abstract class Vehicle implements ILocatable {
 	}
 	
 	/**
+	 * 
+	 * @param movementStrategy
+	 */
+	public void setMovementStrategy(IMovementStrategy movementStrategy){
+		this.movementStrategy = movementStrategy;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public IMovementStrategy getMovementStrategy(){
+		return movementStrategy;
+	}
+	
+	/**
 	 * Abstract method.
 	 * @return {@link Position}
 	 */
-	public abstract Position moveToPosition();
+	public abstract Position moveToPosition(Position currentPosition);
 	
 	/**
 	 * This overrode method compares this object's id with given vehicle object's id. Returns TRUE if compares successfully 

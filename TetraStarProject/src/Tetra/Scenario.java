@@ -4,7 +4,6 @@
 package Tetra;
 
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import Tetra.Base.Base;
 import Tetra.Base.BaseFactory;
@@ -12,6 +11,7 @@ import Tetra.Inhabitant.TRoverFactory;
 import Tetra.Inhabitant.TRovers;
 import TetraGUI.BaseView;
 import TetraGUI.TRoverView;
+import TetraGUI.TetraStarGUI;
 
 /**
  * @author Dhaval

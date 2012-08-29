@@ -3,17 +3,21 @@
  */
 package Tetra.Base;
 
+import Tetra.ILocatable;
 import Tetra.Position;
+import Tetra.TFace;
 
 /**
  * @author Dhaval
  *
  */
-public abstract class Base {
+public abstract class Base implements ILocatable {
 
 	private Position currentPosition = null;
 	
 	private String baseId = null;
+	
+	private TFace tfaceObj = null;
 	
 	public Base(){
 		
@@ -22,6 +26,14 @@ public abstract class Base {
 	public Base(Position basePosition, String baseId){
 		this.currentPosition = basePosition;
 		this.baseId = baseId.concat(basePosition.toString());
+	}
+	
+	public void setTface(TFace tfaceObj){
+		this.tfaceObj = tfaceObj;
+	}
+	
+	public TFace getTface(){
+		return tfaceObj;
 	}
 	
 	public void setPosition(Position basePosition){

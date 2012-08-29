@@ -3,6 +3,8 @@
  */
 package Tetra.Map;
 
+import java.util.ArrayList;
+
 import Tetra.Position;
 import Tetra.StarSignal;
 
@@ -129,15 +131,6 @@ public class EncryptedStarMap extends Map {
 		return symbol;
 	}
 	
-	/*public void setEncryptionStrategy(IEncrytionStrategy encryptionStrategy){
-		this.encryptionStrategy = encryptionStrategy;
-	}
-	
-	public IEncrytionStrategy getEncryptionStrategy(){
-		return encryptionStrategy;
-	}
-	*/
-	
 	public boolean isEncrypted(){
 		return isEncrypted;
 	}
@@ -148,14 +141,25 @@ public class EncryptedStarMap extends Map {
 	
 	
 	@Override
-	public StarSignal showSignal(String mapId, Position heroPosition) {
-		// TODO Auto-generated method stub
-		return map.showSignal(mapId, heroPosition);
+	public StarSignal showSignal(String mapId) {
+		return map.showSignal(mapId);
 	}
 	
 	@Override
 	public String getImageFilePath() {
 		int endIndex = map.getImageFilePath().indexOf(".jpg");
 		return map.getImageFilePath().substring(0, endIndex) + "Encrypted.jpg";
+	}
+
+	@Override
+	public void setStarMapList(ArrayList<Map> mapList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Map> getStarMapList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

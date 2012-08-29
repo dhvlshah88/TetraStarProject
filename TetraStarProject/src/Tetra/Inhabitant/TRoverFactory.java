@@ -18,11 +18,11 @@ public class TRoverFactory {
 	public TRovers createTRover(String type, Position currentPosition){
 
 		TRovers tRover=null;
-		if (type.equals("TRover")) {
+		if (type.equalsIgnoreCase("TRover")) {
 			tRover = new TRovers(currentPosition);
-		} else if (type.equals("THero")) {
+		} else if (type.equalsIgnoreCase("THero")) {
 			tRover = new THero(currentPosition);
-		} else if (type.equals("TVader")) {
+		} else if (type.equalsIgnoreCase("TVader")) {
 			tRover = createTVaderIfNotPresent(currentPosition);
 		}
 		return tRover;

@@ -43,8 +43,7 @@ public class TVaderBase extends Base {
 	 * @param stolenMapInstance
 	 */
 	public void setMap(Map stolenMapInstance){
-		//	if(!isMapEmpty(mapInstance)){
-		if(stolenMapInstance == null){
+		if(stolenMapInstance == null && stolenMapPresent){
 			return;
 		}
 		
@@ -72,7 +71,6 @@ public class TVaderBase extends Base {
 		Map tempMap = getMap();
 		stolenMapInstance = null;
 		stolenMapPresent = false;
-
 		return tempMap;
 	}
 
@@ -83,15 +81,6 @@ public class TVaderBase extends Base {
 	public boolean isMapPresent(){
 		return stolenMapPresent;
 	}
-
-	/*
-	public boolean isMapEmpty(Map mapInstance){
-		if(mapInstance == null){
-			return true;
-		}
-		return false;
-	}*/
-
 
 	/*
 	 * (non-Javadoc)
@@ -107,8 +96,7 @@ public class TVaderBase extends Base {
 	 */
 	@Override
 	public String getImageFilePath() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/images/TVaderBase.jpg";
 	}
 
 

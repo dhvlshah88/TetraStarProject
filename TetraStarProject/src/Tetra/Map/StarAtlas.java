@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import Tetra.Position;
-import Tetra.StarSignal;
 
 
 public class StarAtlas extends Map {
@@ -20,14 +19,14 @@ public class StarAtlas extends Map {
 	}
 
 	/*
-	 * This methods add the StarMap instance in the StarAtlas instance but before adding, it checks whether 
+	 * This methods add the StarMap or Encrypted StarMap instance in the StarAtlas instance but before adding, it checks whether 
 	 * this StarMap instance is already present in the StarAtlas instance or not. If not, it will add the 
 	 * StarMap instance.
 	 */
 	public void addStarMap(Map starMap){
 		Iterator<Map> iterator = mapList.iterator();
 		while(iterator.hasNext()){
-			starMap = iterator.next(); 
+			this.starMap = iterator.next(); 
 			if(this.starMap.getMapId() == starMap.getMapId()){
 				mapAlreadyPresent = true;	
 			}
@@ -43,6 +42,10 @@ public class StarAtlas extends Map {
 		super.setItemCount(mapCount);
 
 
+	}
+	
+	public void setStarMapList(ArrayList<Map> mapList){
+		this.mapList = mapList;
 	}
 
 	public ArrayList<Map> getStarMapList(){

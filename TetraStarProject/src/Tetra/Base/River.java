@@ -38,7 +38,6 @@ public class River extends Base {
 	 */
 	@Override
 	public String getImageFilePath() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/images/River.jpg";
 	}
 }

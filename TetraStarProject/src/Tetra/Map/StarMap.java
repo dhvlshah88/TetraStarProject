@@ -1,5 +1,7 @@
 package Tetra.Map;
 
+import java.util.ArrayList;
+
 import Tetra.Position;
 
 public class StarMap extends Map {
@@ -86,6 +88,18 @@ public class StarMap extends Map {
 	@Override
 	public String getImageFilePath() {
 		return "src/images/StarMap.jpg";
+	}
+
+	@Override
+	public void setStarMapList(ArrayList<Map> mapList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Map> getStarMapList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
      
      

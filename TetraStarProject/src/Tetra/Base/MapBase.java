@@ -12,7 +12,6 @@ import Tetra.Map.Map;
 public class MapBase extends Base {
 
 	private Map mapInstance = null;
-	
 	private String mapId = null;
 	private boolean mapPresent = false;
 
@@ -54,13 +53,6 @@ public class MapBase extends Base {
 		return mapId;
 	}
 
-	public boolean isMapEmpty(Map mapInstance){
-		if(mapInstance == null){
-			return true;
-		}
-		return false;
-	}
-
 	public void setMapPresent(boolean mapPresent){
 		this.mapPresent = mapPresent;
 	}
@@ -69,25 +61,13 @@ public class MapBase extends Base {
 		return mapPresent;
 	}
 
-	/*
-	public String getMapType(){
-		if(mapInstance != null){
-			mapType = mapInstance.getType();
-			return mapType;
-		}
-
-		return "Stolen";
-	}*/
-
-
 	public String getType(){
 		return "MapBase";
 	}
 
 	@Override
 	public String getImageFilePath() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/images/MapBase.jpg";
 	}
 
 }

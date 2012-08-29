@@ -43,14 +43,6 @@ public class THeroBase extends Base {
 		cloneMapList.add(cloneMapInstance);
 	}
 	
-	/*public boolean isMapEmpty(Map mapInstance){
-		if(mapInstance == null){
-			return true;
-		}
-		return false;
-	} */
-
-	
 	/**
 	 * @return
 	 */
@@ -63,7 +55,6 @@ public class THeroBase extends Base {
 	 */
 	@Override
 	public String getImageFilePath() {
-		// TODO Auto-generated method stub
-		return null;
+		return "/images/THeroBase.jpg";
 	}
 }

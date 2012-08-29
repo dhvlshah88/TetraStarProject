@@ -6,7 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import Tetra.ILocatable;
-import Tetra.LocatableCollection;
+import Tetra.TInhabitantCollection;
 import Tetra.Position;
 import Tetra.Inhabitant.TRovers;
 
@@ -24,7 +24,7 @@ public class TetraGUIManager implements Observer {
 	public void update(Observable observable, Object arg) {
 		
 		if(arg == null){
-			locatableHashMap = ((LocatableCollection) observable).getLocatable();
+			locatableHashMap = ((TInhabitantCollection) observable).getLocatable();
 			locatableColl = locatableHashMap.values();
 			
 			
