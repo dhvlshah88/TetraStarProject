@@ -3,6 +3,7 @@ package TetraGUI;
 import java.awt.EventQueue;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +12,8 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.Dimension;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
@@ -23,165 +26,158 @@ import javax.swing.JTextArea;
 import Tetra.Location;
 import Tetra.Position;
 
+import javax.swing.UIManager;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import java.awt.ComponentOrientation;
+import javax.swing.JRadioButton;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class TetraStarGUI extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2316960806450516275L;
 	private JPanel contentPane;
-	private Location[][] cellPanel = null;
-	JTextArea taDisplaySteps = null;
-	private final int ROWS = 8;
-	private final int COLUMNS = 8;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					TetraStarGUI frame = new TetraStarGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JPanel[][] cellPanel = null;
+	static JTextArea taDisplaySteps = null;
+	private final int rows;
+	private final int columns;
+	Dimension cellDimension = null;
+	private int value;
 
 	/**
 	 * Create the frame.
 	 */
-	public TetraStarGUI() {
+	public TetraStarGUI(int rows, int columns) {
+		this.rows = rows;
+		this.columns = columns;
 		setResizable(false);
-		setMaximumSize(new Dimension(1000, 700));
+		setMaximumSize(new Dimension(1000, 600));
 		setTitle("Tetra Star Simulation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 20, 1000, 700);
+		setBounds(100, 20, 1000, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		JPanel gridPanel = new JPanel();
 		gridPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		gridPanel.setPreferredSize(new Dimension(994, 518));
+		gridPanel.setSize(new Dimension(994, 518));
 		gridPanel.setBackground(Color.GRAY);
-		
+
 		JSeparator separator = new JSeparator();
-		
+
 		JPanel stepDisplayPanel = new JPanel();
 		stepDisplayPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		
+
 		JPanel functionalityPanel = new JPanel();
 		functionalityPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(separator, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(stepDisplayPanel, GroupLayout.PREFERRED_SIZE, 582, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(functionalityPanel, GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
-				.addComponent(gridPanel, GroupLayout.PREFERRED_SIZE, 994, GroupLayout.PREFERRED_SIZE)
+					.addComponent(functionalityPanel, GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE))
+				.addComponent(gridPanel, GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(28)
 					.addComponent(gridPanel, GroupLayout.PREFERRED_SIZE, 513, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(stepDisplayPanel, GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-						.addComponent(functionalityPanel, GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(stepDisplayPanel, 0, 0, Short.MAX_VALUE)
+						.addComponent(functionalityPanel, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+					.addGap(39))
 		);
 		
-		JLabel lblSteps = new JLabel("Display Steps");
-		lblSteps.setFont(new Font("Dialog", Font.BOLD, 12));
+		JRadioButton rdbtnScenario = new JRadioButton("Scenario 1");
+		rdbtnScenario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				value = 1;
+			}
+		});
 		
-		taDisplaySteps = new JTextArea();
+		functionalityPanel.add(rdbtnScenario);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GroupLayout gl_stepDisplayPanel = new GroupLayout(stepDisplayPanel);
 		gl_stepDisplayPanel.setHorizontalGroup(
 			gl_stepDisplayPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_stepDisplayPanel.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_stepDisplayPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblSteps)
-						.addComponent(taDisplaySteps, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE))
-					.addGap(20))
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 580, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_stepDisplayPanel.setVerticalGroup(
 			gl_stepDisplayPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_stepDisplayPanel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblSteps, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(taDisplaySteps, GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+				.addGroup(Alignment.CENTER, gl_stepDisplayPanel.createSequentialGroup()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
+
+		JLabel lblSteps = new JLabel("Display Steps");
+		scrollPane.setColumnHeaderView(lblSteps);
+		lblSteps.setFont(new Font("Dialog", Font.BOLD, 12));
+
+		taDisplaySteps = new JTextArea();
+		taDisplaySteps.setEditable(false);
+		scrollPane.setViewportView(taDisplaySteps);
 		stepDisplayPanel.setLayout(gl_stepDisplayPanel);
 		gridPanel.setLayout(new GridLayout(8, 8, 0, 0));
 		contentPane.setLayout(gl_contentPane);
-		
-		generateCell(gridPanel, ROWS, COLUMNS);
+
+		generateCell(gridPanel, rows, columns);
+		setVisible(true);
 		pack();
 	}
-	
-	
+
+	public static void DisplaySteps(String message) {
+		taDisplaySteps.append(message + "\n");
+		taDisplaySteps.repaint();
+	} 
+
 	private void generateCell(JPanel gridPanel, int rows, int columns){
-		cellPanel = new Location[rows][columns];
+		cellPanel = new JPanel[rows][columns];
 		int width = gridPanel.getWidth();
 		int height = gridPanel.getHeight();
-		
-		Dimension cellDimension = new Dimension(width/rows, height/columns);
-		
+
+		cellDimension = new Dimension(width/rows - 10, height/columns - 10);
+
 		for(int i = 0; i < rows; i++){
 			for(int j = 0; j < columns; j++){
-				cellPanel[i][j] = new Location(new Position(i, j));
+
+				cellPanel[i][j] = new JPanel();
 				gridPanel.add(cellPanel[i][j]);
 				cellPanel[i][j].setVisible(true);
 				cellPanel[i][j].setPreferredSize(cellDimension);
 				cellPanel[i][j].setBorder(BorderFactory.createLineBorder(Color.black, 1));
 				cellPanel[i][j].setBackground(new Color(150, 93, 82)); //Brown Color.
-				
-				cellPanel[i][j].addMouseListener(new MouseListener() {
-					
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void mousePressed(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void mouseExited(MouseEvent e) {
-						// TODO Auto-generated method stub
-					}
-					
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						taDisplaySteps.setText(((Location) e.getSource()).getPosition().toString());
-					}
-					
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-
 			}
 		}
-		
-		//cellPanel[0][0].add(new TInhabitantView(cellDimension));
+	}
+
+
+	public void redrawGrid(){
+		repaint();
+	}
+	
+	public void drawLocatableObj(Position position, JPanel locatableViews){
+		cellPanel[position.getRowNo()][position.getColumnNo()].add(locatableViews);
+		cellPanel[position.getRowNo()][position.getColumnNo()].revalidate();
+		cellPanel[position.getRowNo()][position.getColumnNo()].repaint();
+	}
+	
+	public Dimension getCellDimension(){
+		return cellDimension;
 	}
 }
