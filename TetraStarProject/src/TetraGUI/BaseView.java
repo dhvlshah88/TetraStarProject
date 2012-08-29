@@ -25,7 +25,7 @@ public class BaseView extends JPanel {
 
 		try
 		{
-			image = javax.imageio.ImageIO.read(new java.net.URL(BaseView.class.getResource(base.getImageFilePath()), "MapBaseImage.jpg"));
+			image = javax.imageio.ImageIO.read(new java.net.URL(BaseView.class.getResource(base.getImageFilePath()), ""));
 		}
 		catch (Exception e) {
 			System.out.println("Exception: " + e);
@@ -34,7 +34,6 @@ public class BaseView extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		setVisible(true);
 		setBackground(new Color(150, 93, 82));
-
 	}
 	
 	protected void paintComponent(Graphics g)

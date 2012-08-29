@@ -32,10 +32,9 @@ public class TRoverView extends JPanel {
 
 		setPreferredSize(cellDimension);
 		setLayout(new BorderLayout(0, 0));
-		setVisible(true);
 		setBackground(Color.black);
 		setOpaque(false);
-		repaint();
+		setVisible(true);
 	}
 
 	@Override
