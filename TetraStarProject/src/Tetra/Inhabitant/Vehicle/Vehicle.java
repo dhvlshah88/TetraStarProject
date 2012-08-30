@@ -128,4 +128,8 @@ public abstract class Vehicle implements ILocatable {
 		Vehicle vehicle = (Vehicle) obj;
 		return this.getId() == vehicle.getId();
 	}
+
+	public String getImageFilePath() {
+		return "/images/TFlier.jpg";
+	}
 }

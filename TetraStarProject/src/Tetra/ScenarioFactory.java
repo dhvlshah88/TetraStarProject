@@ -9,7 +9,7 @@ public class ScenarioFactory {
 	public Scenario createScenario(int testCaseNo, TetraStarGUI gui, TFace tface){
 		switch (testCaseNo) {
 		case 1:
-			testcase = new Scenario(gui, tface);
+			testcase = new ScenarioOne(gui, tface);
 			break;
 
 		default:

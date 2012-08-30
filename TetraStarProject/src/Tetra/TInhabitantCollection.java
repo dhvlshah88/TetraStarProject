@@ -61,15 +61,11 @@ public class TInhabitantCollection extends Observable{
 		if(currentPosition == null || nextPosition == null){
 			return false;
 		}
-
-		ILocatable locatableInstance = this.getLocatableAtPosition(currentPosition);
-		((TRovers) locatableInstance).setPosition(nextPosition);
-
 		
-		/*if(!this.addIlocatableObject(ilocatableInstance)){
-			((TRovers) ilocatableInstance).setPosition(currentPosition);
-			return false;
-		}*/
+		ILocatable locatableInstance = this.getLocatableAtPosition(currentPosition);
+		((TRovers) locatableInstance).setPrevPosition(currentPosition);
+		((TRovers) locatableInstance).setPosition(nextPosition);
+		
 		inhabitantCollection.put(nextPosition, locatableInstance);
 		inhabitantCollection.remove(currentPosition);
 		locatableChanged(locatableInstance);

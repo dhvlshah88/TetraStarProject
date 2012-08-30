@@ -18,7 +18,7 @@ public class TRoverView extends JPanel {
 	TRovers tRovers = null;
 	Dimension cellDimension = null;
 
-	public TRoverView(Dimension cellDimension , TRovers tRovers) {
+	public TRoverView(Dimension cellDimension, TRovers tRovers) {
 		this.tRovers = tRovers;
 		this.cellDimension = cellDimension;
 
@@ -32,7 +32,6 @@ public class TRoverView extends JPanel {
 
 		setPreferredSize(cellDimension);
 		setLayout(new BorderLayout(0, 0));
-		setBackground(Color.black);
 		setOpaque(false);
 		setVisible(true);
 	}

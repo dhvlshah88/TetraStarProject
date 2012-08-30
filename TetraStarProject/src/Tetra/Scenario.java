@@ -223,4 +223,10 @@ public class Scenario extends MouseAdapter {
 	public TRovers getTrover2(){
 		return trover2;
 	}
+
+
+
+	public TVader getTvader() {
+		return tvader;
+	}
 }

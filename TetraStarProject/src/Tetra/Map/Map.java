@@ -131,6 +131,7 @@ public abstract class Map implements Cloneable, ILocatable {
 	public abstract void setRestorationCounter(int restorationCounter);
 	public abstract int getRestorationCounter();
 	
+	public abstract void addStarMap(Map starMap);
 	public abstract void setStarMapList(ArrayList<Map> mapList);
 	public abstract ArrayList<Map> getStarMapList();
 	

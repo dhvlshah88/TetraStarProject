@@ -40,6 +40,7 @@ public class TetraStarGUI extends JFrame {
 	private final int columns;
 	Dimension cellDimension = null;
 	private int value;
+	JPanel gridPanel = null;
 
 	/**
 	 * Create the frame.
@@ -56,7 +57,7 @@ public class TetraStarGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JPanel gridPanel = new JPanel();
+		gridPanel = new JPanel();
 		gridPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		gridPanel.setSize(new Dimension(994, 518));
 		gridPanel.setBackground(Color.GRAY);
@@ -70,36 +71,36 @@ public class TetraStarGUI extends JFrame {
 		functionalityPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(stepDisplayPanel, GroupLayout.PREFERRED_SIZE, 582, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(functionalityPanel, GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE))
-				.addComponent(gridPanel, GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE))
-		);
+						.addComponent(stepDisplayPanel, GroupLayout.PREFERRED_SIZE, 582, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(functionalityPanel, GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE))
+						.addComponent(gridPanel, GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(separator, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE))
+				);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(gridPanel, GroupLayout.PREFERRED_SIZE, 513, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(stepDisplayPanel, 0, 0, Short.MAX_VALUE)
-						.addComponent(functionalityPanel, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
-					.addGap(39))
-		);
-		
+						.addComponent(gridPanel, GroupLayout.PREFERRED_SIZE, 513, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(separator, GroupLayout.PREFERRED_SIZE, 2, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(stepDisplayPanel, 0, 0, Short.MAX_VALUE)
+								.addComponent(functionalityPanel, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+								.addGap(39))
+				);
+
 		JRadioButton rdbtnScenario = new JRadioButton("Scenario 1");
 		rdbtnScenario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				value = 1;
 			}
 		});
-		
+
 		functionalityPanel.add(rdbtnScenario);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -107,17 +108,17 @@ public class TetraStarGUI extends JFrame {
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		GroupLayout gl_stepDisplayPanel = new GroupLayout(stepDisplayPanel);
 		gl_stepDisplayPanel.setHorizontalGroup(
-			gl_stepDisplayPanel.createParallelGroup(Alignment.LEADING)
+				gl_stepDisplayPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_stepDisplayPanel.createSequentialGroup()
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 580, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 580, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				);
 		gl_stepDisplayPanel.setVerticalGroup(
-			gl_stepDisplayPanel.createParallelGroup(Alignment.LEADING)
+				gl_stepDisplayPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(Alignment.CENTER, gl_stepDisplayPanel.createSequentialGroup()
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap())
+				);
 
 		JLabel lblSteps = new JLabel("Display Steps");
 		scrollPane.setColumnHeaderView(lblSteps);
@@ -161,17 +162,27 @@ public class TetraStarGUI extends JFrame {
 	}
 
 
-	public void redrawGrid(){
-		repaint();
+	public void redrawGrid(Position prevPosition, Position currentPosition){
+		JPanel view = null;
+		if(cellPanel[prevPosition.getRowNo()][prevPosition.getColumnNo()].getComponentCount() != 1){
+			view = (JPanel) cellPanel[prevPosition.getRowNo()][prevPosition.getColumnNo()].getComponent(1);	
+		}
+
+		view = (JPanel) cellPanel[prevPosition.getRowNo()][prevPosition.getColumnNo()].getComponent(0);
+		cellPanel[currentPosition.getRowNo()][currentPosition.getColumnNo()].add(view);
+		cellPanel[prevPosition.getRowNo()][prevPosition.getColumnNo()].remove(view);
+		gridPanel.revalidate();
+		gridPanel.repaint();
 	}
-	
-	public void drawLocatableObj(Position position, JPanel locatableViews){
+
+	public void initializeGrid(Position position, JPanel locatableViews){
 		cellPanel[position.getRowNo()][position.getColumnNo()].add(locatableViews);
-		cellPanel[position.getRowNo()][position.getColumnNo()].revalidate();
-		cellPanel[position.getRowNo()][position.getColumnNo()].repaint();
+		gridPanel.revalidate();
+		gridPanel.repaint();
 	}
-	
+
 	public Dimension getCellDimension(){
 		return cellDimension;
 	}
+
 }

@@ -6,13 +6,13 @@ import Tetra.Base.Base;
 
 public class TBaseCollection {
 
-	private HashMap<Position, ILocatable> tbaseCollection = null;
+	private HashMap<Position, ILocatable> tbaseCollection =  new HashMap<Position, ILocatable>();
 
 	/**
 	 * Default Constructor
 	 */
 	public TBaseCollection(){
-		tbaseCollection = new HashMap<Position, ILocatable>();
+
 	}
 
 	/**

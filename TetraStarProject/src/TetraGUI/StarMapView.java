@@ -180,7 +180,7 @@ public class StarMapView extends JDialog {
 		lblStarmapid = new JLabel();
 		lblStarmapid.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 
-		lblItems = new JLabel("Items:");
+		lblItems = new JLabel("Item Count:");
 		lblItems.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		lblItems.setBackground(new Color(255, 0, 0));
 		lblItemsCount = new JLabel();
@@ -203,11 +203,11 @@ public class StarMapView extends JDialog {
 					.addComponent(lblLocationid)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblLocid, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-					.addGap(58)
+					.addGap(18)
 					.addComponent(lblItems)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblItemsCount, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(40, Short.MAX_VALUE))
+					.addContainerGap(50, Short.MAX_VALUE))
 		);
 		gl_header.setVerticalGroup(
 			gl_header.createParallelGroup(Alignment.LEADING)
@@ -221,7 +221,7 @@ public class StarMapView extends JDialog {
 							.addComponent(lblStarmapid, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
 							.addComponent(lblId)
 							.addComponent(lblLocationid)))
-					.addContainerGap(37, Short.MAX_VALUE))
+					.addContainerGap(36, Short.MAX_VALUE))
 		);
 		header.setLayout(gl_header);
 		contentPanel.setLayout(gl_contentPanel);

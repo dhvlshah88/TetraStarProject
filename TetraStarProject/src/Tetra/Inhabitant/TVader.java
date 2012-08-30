@@ -23,7 +23,8 @@ public class TVader extends TRovers {
 	private Vehicle vehicle = null;
 	private TInhabitantCollection locatableColl = null;
 	private static int length;
-	
+	private boolean traceOn = true;
+
 	/*
 	 * Default Constructor 
 	 */
@@ -45,7 +46,7 @@ public class TVader extends TRovers {
 	public Vehicle getVehicle(){
 		return vehicle;
 	}
-	
+
 	public boolean stealMap(MapBase base){
 		if(!base.isMapPresent()){
 			return false;
@@ -57,15 +58,23 @@ public class TVader extends TRovers {
 	public void moveToPosition(Position nextPosition){
 		locatableColl.changePosition(this.getPosition(), nextPosition);
 		this.setPosition(nextPosition);
-		recordMove(nextPosition);
+		if(traceOn){
+			recordMove(nextPosition);
+		}
 	}
-	
+
 	public void recordMove(Position positionCovered){
 		positionList.add(positionCovered);
 	}
-	
+
 	public void retracePosition(){
+		traceOn = false;
 		length = positionList.size();
+
+		if(length < 0){
+			traceOn = true;
+			return;
+		}
 		moveToPosition(positionList.remove(length--));
 	}
 

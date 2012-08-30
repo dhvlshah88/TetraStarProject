@@ -8,10 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Tetra.ILocatable;
+import Tetra.TBaseCollection;
 import Tetra.TInhabitantCollection;
 import Tetra.Logger;
 import Tetra.Position;
 import Tetra.StarSignal;
+import Tetra.VehicleCollection;
+import Tetra.Base.Base;
 import Tetra.Base.MapBase;
 import Tetra.Base.River;
 import Tetra.Base.THeroBase;
@@ -43,7 +46,9 @@ public class THero extends TRovers {
 	private String symbol = "*";
 	private Date dateNow;
 	private SimpleDateFormat dateformatter;
-	private TInhabitantCollection locatableColl = null;
+	private TInhabitantCollection inhabitantColl = null;
+	private TBaseCollection tbaseColl = null;
+	private VehicleCollection vehicleColl = null;
 	private Position nextPosition = null;
 	private ILocatable locatableObj = null;
 	private Position lastVisitedMapBasePosition = null; 
@@ -59,7 +64,9 @@ public class THero extends TRovers {
 
 	public THero(Position currentPosition){
 		super(currentPosition);
-		locatableColl = new TInhabitantCollection();
+		inhabitantColl = new TInhabitantCollection();
+		tbaseColl = new TBaseCollection();
+		vehicleColl = new VehicleCollection();
 	}
 
 	public void setMap(Map map){
@@ -89,7 +96,7 @@ public class THero extends TRovers {
 	public void setVehicle(Vehicle vehicle){
 		this.vehicle = vehicle;
 	}
-	
+
 	public Vehicle getVehicle(){
 		return vehicle;
 	}
@@ -101,7 +108,7 @@ public class THero extends TRovers {
 	public String getSymbol(){
 		return symbol;
 	}
-	
+
 	public Map encryptMap(Map map){
 		if(map instanceof StarMap && !mapPresent){
 			dateNow = new Date();
@@ -146,18 +153,20 @@ public class THero extends TRovers {
 		this.clonedMap = map.clone();
 		clonedMapPresent = true;
 	}
-	
+
 	public void displayMap(Map map){
 		String mapType = map.getType();
 		if( mapType == "StarMap" || mapType == "EncryptedStarMap"){
 			StarMapView starMapView = new StarMapView();
 			starMapView.setStarMap(map);
+			starMapView.setVisible(true);
 		}else{
 			StarAtlasView starAtlasView = new StarAtlasView();
 			starAtlasView.setStarAtlas((StarAtlas)map);
+			starAtlasView.setVisible(true);
 		}
 	}
-	
+
 	public boolean isMapPresent(){
 		return mapPresent;
 	}
@@ -167,14 +176,28 @@ public class THero extends TRovers {
 	}
 
 	public void moveToPosition(Position nextPosition){
-		locatableColl.changePosition(this.getPosition(), nextPosition);
+
+		if(inhabitantColl.objectAt(nextPosition)){
+			if(inhabitantColl.objectAt(nextPosition)){
+				locatableObj = inhabitantColl.getLocatableAtPosition(nextPosition);
+
+				return;
+			}
+		}
+
+
+		if(tbaseColl.objectAt(nextPosition)){
+
+		}
+
+		inhabitantColl.changePosition(this.getPosition(), nextPosition);
 		this.setPosition(nextPosition);
 	}
 
 	/*public void moveToPosition(Position nextPosition){
 		if(!isBase && !mapStolen && !clonedMapPresent){
 			if(locatableColl.objectAt(nextPosition)){
-				
+
 				locatableObj = locatableColl.getLocatableAtPosition(nextPosition);
 
 				if(locatableObj instanceof TRovers){
@@ -223,14 +246,6 @@ public class THero extends TRovers {
 
 	}*/
 
-	/*
-	public void setPresentInBase(boolean presentInBase){
-		this.presentInBase = presentInBase;
-	}
-
-	public boolean presentInBase(){
-		return presentInBase;
-	}*/
 
 	public void enterHeroBase(ILocatable locatableObj){
 		Logger.DisplaySteps("THero " + this.getTetId() + " enters hero base.");	
@@ -241,7 +256,7 @@ public class THero extends TRovers {
 		}
 	}
 
-	
+
 	public void enterMapBase(ILocatable locatableObj){
 		Logger.DisplaySteps("THero " + this.getTetId() + " enters map base.");
 
@@ -249,7 +264,7 @@ public class THero extends TRovers {
 		if(mapBase.isMapPresent()){
 			Map map = mapBase.getMap();
 			Logger.DisplaySteps("THero " + this.getTetId() + " found the map " + map.getMapId() + ".");
-			
+
 			if(map.isEncrypted()){
 				if(((EncryptedStarMap) map).getTHeroId() == super.getTetId()){
 					Logger.DisplaySteps("Map is encrypted by him.");
@@ -304,6 +319,7 @@ public class THero extends TRovers {
 		}
 
 	}
+
 
 	@Override
 	public String getType() {

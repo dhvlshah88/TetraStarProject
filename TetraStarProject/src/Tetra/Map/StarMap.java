@@ -101,6 +101,12 @@ public class StarMap extends Map {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void addStarMap(Map starMap) {
+		// TODO Auto-generated method stub
+		
+	}
      
      
      

@@ -1,10 +1,12 @@
 package Tetra.Inhabitant;
 
 import Tetra.ILocatable;
+import Tetra.TBaseCollection;
 import Tetra.TInhabitantCollection;
 import Tetra.Logger;
 import Tetra.Position;
 import Tetra.TFace;
+import Tetra.VehicleCollection;
 import Tetra.Base.MapBase;
 import Tetra.Base.River;
 import Tetra.Base.THeroBase;
@@ -24,12 +26,15 @@ public class TRovers implements ILocatable {
 	private String tetId;
 	private String name;
 	private Position currentPosition = null;
+	private Position previousPosition = null;
 	private Position vaderBasePosition = null;
 	private TFace tface;
 	private IMovementStrategy movementStrategy = null;
-	private TInhabitantCollection locatableColl = null;
+	private TInhabitantCollection inhabitantColl = null;
+	private TBaseCollection baseColl = null;
+	private VehicleCollection vehicleColl = null;
 	private ILocatable locatableObj = null;
-	
+
 	/**
 	 * Default Constructor
 	 */
@@ -125,12 +130,26 @@ public class TRovers implements ILocatable {
 
 	/**
 	 * 
+	 * @param currentPosition
+	 */
+	public void setPrevPosition(Position previousPosition) {
+		this.previousPosition = previousPosition;
+	}
+
+	/**
+	 * @return
+	 */
+	public Position getPrevPosition() {
+		return previousPosition;
+	}
+
+	/**
+	 * 
 	 * @param tface
 	 */
 	public void setTface(TFace tface) {
 		this.tface = tface;
 	}
-
 
 	/**
 	 * 
@@ -140,6 +159,30 @@ public class TRovers implements ILocatable {
 		return tface;
 	}
 
+	public void setInhabitantColl(TInhabitantCollection inhabitantColl) {
+		this.inhabitantColl = inhabitantColl;
+	}
+	
+	public TInhabitantCollection getInhabitantColl() {
+		return inhabitantColl;
+	}
+	
+	public void setBaseColl(TBaseCollection baseColl) {
+		this.baseColl = baseColl;
+	}
+	
+	public TBaseCollection getBaseColl() {
+		return baseColl;
+	}
+	
+	public void setVehicleColl(VehicleCollection vehicleColl) {
+		this.vehicleColl = vehicleColl;
+	}
+	
+	public VehicleCollection getVehicleColl() {
+		return vehicleColl;
+	}
+	
 	/**
 	 * 
 	 * @param movementStrategy
@@ -161,10 +204,12 @@ public class TRovers implements ILocatable {
 		if( mapType == "StarMap" || mapType == "EncryptedStarMap"){
 			StarMapView starMapView = new StarMapView();
 			starMapView.setStarMap(map);
+			starMapView.setVisible(true);
 		}else{
 			StarAtlasView starAtlasView = new StarAtlasView();
 			starAtlasView.setStarAtlas((StarAtlas)map);
-		}
+			starAtlasView.setVisible(true);
+			}
 	}
 
 
@@ -174,26 +219,35 @@ public class TRovers implements ILocatable {
 	}*/
 
 	public void moveToPosition(Position nextPosition){
-		/*if(!presentInBase){
-			if(locatableColl.objectAt(nextPosition)){
-				locatableObj = locatableColl.getLocatableAtPosition(nextPosition);
-
-				if(locatableObj instanceof TRovers){
-					return;
-				}
-
-				if(locatableObj instanceof River || locatableObj instanceof THeroBase || locatableObj instanceof TVaderBase){
-					return;
-				}else{
-					presentInBase = true;
-				}
+	
+		if(inhabitantColl.objectAt(nextPosition)){
+			locatableObj = inhabitantColl.getLocatableAtPosition(nextPosition);
+			if(locatableObj instanceof TRovers){
+				return;
+			}
+			return;
+		}
+		
+		if(baseColl.objectAt(nextPosition)){
+			locatableObj = baseColl.getLocatableAtPosition(nextPosition);
+			if(locatableObj instanceof River || locatableObj instanceof THeroBase || locatableObj instanceof TVaderBase){
+				return;
 			}else{
+				inhabitantColl.changePosition(this.getPosition(), nextPosition);
+				this.setPosition(nextPosition);
 				this.enterMapBase(locatableObj);
 			}
-		}*/
+			return;
+		}
+		
+		if(vehicleColl.objectAt(nextPosition)){
+			locatableObj = vehicleColl.getLocatableAtPosition(nextPosition);
+			return;
+		}
 
-		locatableColl.changePosition(this.getPosition(), nextPosition);
+		inhabitantColl.changePosition(this.getPosition(), nextPosition);
 		this.setPosition(nextPosition);
+
 	}
 
 	public void enterMapBase(ILocatable locatableObj){
