@@ -12,6 +12,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 public class BaseView extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7328384810065237203L;
 	Image image;
 	Dimension cellDimension = null;
 	Base base = null;
@@ -33,6 +37,7 @@ public class BaseView extends JPanel {
 		setPreferredSize(cellDimension);
 		setLayout(new BorderLayout(0, 0));
 		setVisible(true);
+		setOpaque(false);
 		setBackground(new Color(150, 93, 82));
 	}
 	

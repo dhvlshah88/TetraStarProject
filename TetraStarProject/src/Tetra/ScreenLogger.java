@@ -8,7 +8,7 @@ import TetraGUI.*;
  *
  */
 
-public class Logger {
+public class ScreenLogger {
 
 	/**
 	 * This static method calls <code>DisplaySteps()</code> method of <code>TetraStarGUI</code> class to print steps

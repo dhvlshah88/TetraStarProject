@@ -43,6 +43,10 @@ public class THeroBase extends Base {
 		cloneMapList.add(cloneMapInstance);
 	}
 	
+	public Map getCloneMap(){
+		return cloneMapList.get(cloneMapList.size() - 1);
+	}
+	
 	/**
 	 * @return
 	 */

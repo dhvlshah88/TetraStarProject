@@ -4,8 +4,6 @@
 package Tetra.Map;
 
 import java.util.ArrayList;
-
-import Tetra.Position;
 import Tetra.StarSignal;
 
 /**
@@ -85,7 +83,7 @@ public class EncryptedStarMap extends Map {
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
-		return "Encrypted " + map.getType();
+		return "EncryptedStarMap";
 	}
 	
 	@Override

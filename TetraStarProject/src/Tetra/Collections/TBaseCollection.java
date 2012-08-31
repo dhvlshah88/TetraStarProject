@@ -1,18 +1,25 @@
-package Tetra;
+package Tetra.Collections;
 
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
+import Tetra.ILocatable;
+import Tetra.Position;
+import Tetra.TetraGUIManager;
 import Tetra.Base.Base;
 
-public class TBaseCollection {
+public class TBaseCollection extends Observable {
 
-	private HashMap<Position, ILocatable> tbaseCollection =  new HashMap<Position, ILocatable>();
-
+	private HashMap<Position, ILocatable> tbaseCollection;
+	private boolean isPresent = false;
+	
 	/**
 	 * Default Constructor
 	 */
-	public TBaseCollection(){
-
+	public TBaseCollection(TetraGUIManager guiMngr){
+		tbaseCollection =  new HashMap<Position, ILocatable>();
+		addObserver(guiMngr);
 	}
 
 	/**
@@ -26,7 +33,13 @@ public class TBaseCollection {
 			return false;
 		}
 
-		return tbaseCollection.get(nextPosition) != null;
+		isPresent = tbaseCollection.get(nextPosition) != null;
+		if(isPresent){
+			setChanged();
+			notifyObservers(nextPosition);
+		}
+		
+		return isPresent;
 	}
 
 	/**
@@ -46,6 +59,7 @@ public class TBaseCollection {
 		}
 
 		tbaseCollection.put(ilocatablePosition, currentLocatable);
+		locatableChanged(currentLocatable);
 		return true;
 	}
 
@@ -82,6 +96,15 @@ public class TBaseCollection {
 	public void removeLocatableAtPosition(Position nextPosition){
 	}
 	
-
+	public void locatableChanged(ILocatable locatableObj){
+		setChanged();
+		notifyObservers(locatableObj);
+	}
+	
+	@Override
+	public synchronized void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		super.addObserver(o);
+	}
 	
 }

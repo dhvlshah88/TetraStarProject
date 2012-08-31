@@ -58,13 +58,13 @@ public class StarMapView extends JDialog {
 		setTitle("StarMap");
 
 
-		addMouseListener(new MouseAdapter() {
+		/*addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				setVisible(false);
 
 			}
-		});
+		});*/
 		setBounds(100, 100, 515, 355);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -113,9 +113,10 @@ public class StarMapView extends JDialog {
 		lblMessage_1.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
 	
 		lblSymbols = new JLabel();
+		lblSymbols.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		lblSymbols.setVisible(false);
 		lblSymbols_1 = new JLabel();
-		lblSymbols_1.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		lblSymbols_1.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		lblSymbols_1.setVisible(false);
 		
 		JLabel lblMessage = new JLabel("Directions:");
@@ -124,28 +125,28 @@ public class StarMapView extends JDialog {
 
 		GroupLayout gl_body = new GroupLayout(mapBody);
 		gl_body.setHorizontalGroup(
-			gl_body.createParallelGroup(Alignment.LEADING)
+			gl_body.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_body.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_body.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblSymbols, GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
 						.addGroup(gl_body.createSequentialGroup()
 							.addComponent(lblMessage)
 							.addGap(13)
-							.addComponent(lblMessage_1, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
+							.addComponent(lblMessage_1, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE))
 						.addGroup(gl_body.createSequentialGroup()
 							.addComponent(lblTheroid)
 							.addGap(13)
-							.addGroup(gl_body.createSequentialGroup()
-								.addComponent(lblTheroid_1)
-								.addGap(39)
-								.addComponent(lblDate_)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(lblDate)
-								.addGap(49)
-								.addComponent(lblSymbol)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(lblSymbol_1, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(lblSymbols, GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+							.addComponent(lblTheroid_1)
+							.addGap(39)
+							.addComponent(lblDate_)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblDate)
+							.addGap(49)
+							.addComponent(lblSymbol)
+							.addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+							.addComponent(lblSymbol_1, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+							.addGap(143))
 						.addComponent(lblSymbols_1, GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
 					.addContainerGap())
 		);
@@ -155,20 +156,21 @@ public class StarMapView extends JDialog {
 					.addGap(8)
 					.addComponent(lblSymbols, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addGroup(gl_body.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_body.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblTheroid)
-							.addComponent(lblSymbol_1)
-							.addComponent(lblSymbol))
-						.addGroup(gl_body.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblTheroid_1)
-							.addComponent(lblDate_)
-							.addComponent(lblDate)))
+					.addGroup(gl_body.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_body.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_body.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblTheroid)
+								.addComponent(lblSymbol))
+							.addGroup(gl_body.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblTheroid_1)
+								.addComponent(lblDate_)
+								.addComponent(lblDate)))
+						.addComponent(lblSymbol_1, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_body.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lblMessage_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(lblMessage, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
 					.addComponent(lblSymbols_1, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
@@ -263,7 +265,7 @@ public class StarMapView extends JDialog {
 			lblTheroid_1.setText(map.getTHeroId());
 			
 			String symbol_="";
-			for (int i = 0; i < 60 ; i++ ) {
+			for (int i = 0; i < 50 ; i++ ) {
 				symbol_=symbol_ + map.getSymbol(); 
 			}
 			lblSymbols_1.setText(symbol_);

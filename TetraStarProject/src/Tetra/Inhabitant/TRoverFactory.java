@@ -17,7 +17,7 @@ public class TRoverFactory {
 
 	public TRovers createTRover(String type, Position currentPosition){
 
-		TRovers tRover=null;
+		TRovers tRover = new NullTRover(currentPosition);
 		if (type.equalsIgnoreCase("TRover")) {
 			tRover = new TRovers(currentPosition);
 		} else if (type.equalsIgnoreCase("THero")) {

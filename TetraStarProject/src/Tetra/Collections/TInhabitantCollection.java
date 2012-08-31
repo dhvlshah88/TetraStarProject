@@ -1,16 +1,29 @@
-package Tetra;
+/**
+ * 
+ */
+package Tetra.Collections;
 
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
+import Tetra.ILocatable;
+import Tetra.Position;
+import Tetra.TetraGUIManager;
 import Tetra.Inhabitant.TRovers;
-import Tetra.Inhabitant.Vehicle.Vehicle;
 
-public class VehicleCollection {
-	
-	private HashMap<Position, ILocatable> vehicleCollection = null;
+/**
+ * @author Dhaval
+ *
+ */
+public class TInhabitantCollection extends Observable{
 
-	public VehicleCollection(){
-		vehicleCollection = new HashMap<Position, ILocatable>();
+	private HashMap<Position, ILocatable> inhabitantCollection = null;
+	private boolean isPresent = false;
+
+	public TInhabitantCollection(TetraGUIManager guiMngr){
+		inhabitantCollection = new HashMap<Position, ILocatable>();
+		addObserver(guiMngr);
 	}
 
 	/**
@@ -24,7 +37,12 @@ public class VehicleCollection {
 			return false;
 		}
 
-		return vehicleCollection.get(nextPosition) != null;
+		isPresent = inhabitantCollection.get(nextPosition) != null;
+		if(isPresent){
+			setChanged();
+			notifyObservers(nextPosition);
+		}
+		return isPresent;
 	}
 
 	/**
@@ -33,18 +51,14 @@ public class VehicleCollection {
 	 * does not contains same position instance. On successful adding of the position, method returns true value. 
 	 */
 	public boolean addLocatableObject(ILocatable currentLocatable) {
-		if(!(currentLocatable instanceof Vehicle)){
-			return false;
-		}
-		
 		Position ilocatablePosition = currentLocatable.getPosition();
 
-		if(this.objectAt(ilocatablePosition)){
+		if(this.objectAt(ilocatablePosition) && !(currentLocatable instanceof TRovers)){
 			return false;
 		}
 
-		vehicleCollection.put(ilocatablePosition, currentLocatable);
-		//locatableChanged(currentLocatable);
+		inhabitantCollection.put(ilocatablePosition, currentLocatable);
+		locatableChanged(currentLocatable);
 		return true;
 	}
 
@@ -58,14 +72,14 @@ public class VehicleCollection {
 		if(currentPosition == null || nextPosition == null){
 			return false;
 		}
-
-		ILocatable locatableInstance = this.getLocatableAtPosition(currentPosition);
-		((TRovers) locatableInstance).setPosition(nextPosition);
-
 		
-		vehicleCollection.put(nextPosition, locatableInstance);
-		vehicleCollection.remove(currentPosition);
-		//locatableChanged(locatableInstance);
+		ILocatable locatableInstance = this.getLocatableAtPosition(currentPosition);
+		((TRovers) locatableInstance).setPrevPosition(currentPosition);
+		((TRovers) locatableInstance).setPosition(nextPosition);
+		
+		inhabitantCollection.put(nextPosition, locatableInstance);
+		inhabitantCollection.remove(currentPosition);
+		locatableChanged(locatableInstance);
 		return true;	
 	}
 
@@ -79,12 +93,12 @@ public class VehicleCollection {
 			return null;
 		}
 
-		return vehicleCollection.get(nextPosition);
+		return inhabitantCollection.get(nextPosition);
 	}
 	
 	
 	public HashMap<Position, ILocatable> getLocatable(){
-		return vehicleCollection;
+		return inhabitantCollection;
 	}
 	
 	public void removeLocatableAtPosition(Position nextPosition){
@@ -92,13 +106,18 @@ public class VehicleCollection {
 			return;
 		}
 		
-		vehicleCollection.remove(nextPosition);
-		//locatableChanged(null);
+		inhabitantCollection.remove(nextPosition);
+		locatableChanged(null);
 	}
 	
-	/*public void locatableChanged(ILocatable locatableObj){
+	public void locatableChanged(ILocatable locatableObj){
 		setChanged();
 		notifyObservers(locatableObj);
-	}*/
+	}
 
+	@Override
+	public synchronized void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		super.addObserver(o);
+	}
 }

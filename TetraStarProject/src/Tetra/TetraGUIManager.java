@@ -1,42 +1,55 @@
-package TetraGUI;
+package Tetra;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
-import Tetra.ILocatable;
-import Tetra.Position;
-import Tetra.TFace;
 import Tetra.Inhabitant.TRovers;
+import TetraGUI.TetraStarGUI;
+import TetraGUI.TetraViewFactory;
 
 
-public class TetraGUIManager implements Observer {
+public class TetraGUIManager implements Observer{
 
 	private TFace tfaceObj = null;
 	private TetraStarGUI gui = null;
 	private ILocatable locatableObj = null;
 	private TetraViewFactory viewFactory = null;
 
-	public TetraGUIManager(TetraStarGUI gui, TFace tfaceObj, Observable observableObj){
+	public TetraGUIManager() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public TetraGUIManager(TetraStarGUI gui, TFace tfaceObj){
 		this.gui = gui;
 		this.tfaceObj = tfaceObj;
-		observableObj.addObserver(this);
+		//observableObj.addObserver(this);
 	}
 
 	@Override
 	public void update(Observable observable, Object arg) {
-
-		locatableObj = (ILocatable) arg;
-		if(locatableObj instanceof TRovers){
-			TRovers trover = ((TRovers)locatableObj);
-			if(trover.getPrevPosition() == null){
-
+		if(arg instanceof ILocatable){
+			locatableObj = (ILocatable) arg;
+			if(locatableObj instanceof TRovers){
+				TRovers trover = ((TRovers)locatableObj);
+				if(trover.getPrevPosition() == null){
+					drawGrid(trover.getPosition(), this.generateViews(trover));
+				}
+				else{
+					redrawGrid(trover.getPrevPosition(), trover.getPosition());
+				}
+			}else{
+				drawGrid(locatableObj.getPosition(), this.generateViews(locatableObj));
 			}
-			else{
-				redrawGrid(trover.getPrevPosition(), trover.getPosition());
-			}
+		}
+		
+		if(arg instanceof Position){
+			gui.highlightCell((Position)arg, true);
 		}
 	}
 
@@ -56,5 +69,5 @@ public class TetraGUIManager implements Observer {
 		viewFactory = new TetraViewFactory(this.getCellDimension());
 		return viewFactory.generateViews(locatableObj);
 	}
-	
+
 }

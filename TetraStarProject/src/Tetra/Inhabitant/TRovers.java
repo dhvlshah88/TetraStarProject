@@ -1,16 +1,16 @@
 package Tetra.Inhabitant;
 
 import Tetra.ILocatable;
-import Tetra.TBaseCollection;
-import Tetra.TInhabitantCollection;
-import Tetra.Logger;
+import Tetra.ScreenLogger;
 import Tetra.Position;
 import Tetra.TFace;
-import Tetra.VehicleCollection;
 import Tetra.Base.MapBase;
 import Tetra.Base.River;
 import Tetra.Base.THeroBase;
 import Tetra.Base.TVaderBase;
+import Tetra.Collections.TBaseCollection;
+import Tetra.Collections.TInhabitantCollection;
+import Tetra.Collections.VehicleCollection;
 import Tetra.Inhabitant.Movement.IMovementStrategy;
 import Tetra.Inhabitant.Vehicle.Vehicle;
 import Tetra.Map.EncryptedStarMap;
@@ -162,27 +162,27 @@ public class TRovers implements ILocatable {
 	public void setInhabitantColl(TInhabitantCollection inhabitantColl) {
 		this.inhabitantColl = inhabitantColl;
 	}
-	
+
 	public TInhabitantCollection getInhabitantColl() {
 		return inhabitantColl;
 	}
-	
+
 	public void setBaseColl(TBaseCollection baseColl) {
 		this.baseColl = baseColl;
 	}
-	
+
 	public TBaseCollection getBaseColl() {
 		return baseColl;
 	}
-	
+
 	public void setVehicleColl(VehicleCollection vehicleColl) {
 		this.vehicleColl = vehicleColl;
 	}
-	
+
 	public VehicleCollection getVehicleColl() {
 		return vehicleColl;
 	}
-	
+
 	/**
 	 * 
 	 * @param movementStrategy
@@ -209,7 +209,7 @@ public class TRovers implements ILocatable {
 			StarAtlasView starAtlasView = new StarAtlasView();
 			starAtlasView.setStarAtlas((StarAtlas)map);
 			starAtlasView.setVisible(true);
-			}
+		}
 	}
 
 
@@ -219,27 +219,26 @@ public class TRovers implements ILocatable {
 	}*/
 
 	public void moveToPosition(Position nextPosition){
-	
+
 		if(inhabitantColl.objectAt(nextPosition)){
-			locatableObj = inhabitantColl.getLocatableAtPosition(nextPosition);
-			if(locatableObj instanceof TRovers){
-				return;
-			}
+			ScreenLogger.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ") cannot move to Location (" 
+					+ nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ") as ");
+			ScreenLogger.DisplaySteps(((TRovers)inhabitantColl.getLocatableAtPosition(nextPosition)).getType() + " present at that location!!");
 			return;
 		}
-		
+
 		if(baseColl.objectAt(nextPosition)){
 			locatableObj = baseColl.getLocatableAtPosition(nextPosition);
-			if(locatableObj instanceof River || locatableObj instanceof THeroBase || locatableObj instanceof TVaderBase){
-				return;
-			}else{
+			if(locatableObj instanceof MapBase){
 				inhabitantColl.changePosition(this.getPosition(), nextPosition);
 				this.setPosition(nextPosition);
 				this.enterMapBase(locatableObj);
 			}
+
+			ScreenLogger.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ") has cannot moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 			return;
 		}
-		
+
 		if(vehicleColl.objectAt(nextPosition)){
 			locatableObj = vehicleColl.getLocatableAtPosition(nextPosition);
 			return;
@@ -251,12 +250,12 @@ public class TRovers implements ILocatable {
 	}
 
 	public void enterMapBase(ILocatable locatableObj){
-		Logger.DisplaySteps("TRover " + this.getTetId() + " enters map base.");
+		ScreenLogger.DisplaySteps("TRover " + this.getTetId() + " enters map base.");
 
 		MapBase mapBase = (MapBase) locatableObj;
 		if(mapBase.isMapPresent()){
 			Map map = mapBase.getMap();
-			Logger.DisplaySteps("TRover " + this.getTetId() + " found the map " + map.getMapId() + ".");
+			ScreenLogger.DisplaySteps("TRover " + this.getTetId() + " found the map " + map.getMapId() + ".");
 			this.displayMap(map);
 		}
 	}
