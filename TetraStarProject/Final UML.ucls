@@ -1,9 +1,0 @@
-<class-diagram version="1.0.10" icons="false" automaticImage="JPEG" always-add-relationships="false" 
-  generalizations="true" realizations="true" associations="true" dependencies="true" nesting-relationships="false">  
-  <classifier-display autosize="true" stereotype="true" package="false" initial-value="true" signature="true" 
-    visibility="false">    
-    <attributes public="true" package="true" protected="true" private="true"/>    
-    <operations public="true" package="true" protected="true" private="true"/>  
-  </classifier-display>  
-  <association-display labels="true" multiplicity="true"/>
-</class-diagram>
