@@ -17,13 +17,15 @@ import Tetra.Inhabitant.THero;
 import Tetra.Inhabitant.TRoverFactory;
 import Tetra.Inhabitant.TRovers;
 import Tetra.Inhabitant.TVader;
+import Tetra.Inhabitant.Movement.AllDirectionMovement;
+import Tetra.Inhabitant.Movement.CardinalDirectionMovement;
+import Tetra.Inhabitant.Movement.OrdinalDirectionMovement;
+import Tetra.Inhabitant.Movement.TFlierMovement;
 import Tetra.Map.EncryptedStarMap;
 import Tetra.Map.EncryptionStrategyOne;
 import Tetra.Map.EncryptionStrategyTwo;
 import Tetra.Map.Map;
 import Tetra.Map.MapFactory;
-import TetraGUI.BaseView;
-import TetraGUI.TRoverView;
 import TetraGUI.TetraStarGUI;
 
 /**
@@ -32,7 +34,6 @@ import TetraGUI.TetraStarGUI;
  */
 public class Scenario extends MouseAdapter {
 
-	private TetraStarGUI gui = null;
 	private TFace tface = null;
 
 	private TRovers trover1 = null;
@@ -50,12 +51,11 @@ public class Scenario extends MouseAdapter {
 	private MapBase mapbase2 = null;
 	private MapBase mapbase3 = null;
 	private Base herobase = null;
+	private Base vaderbase = null;
 	private Base firstriver = null;
 	private Base secondriver = null;
-	Base thirdriver = null;
-	Base fourthriver = null;
-	
-	Base vaderbase = null;
+	private Base thirdriver = null;
+	private Base fourthriver = null;
 
 	private TInhabitantCollection inhabitantColl = null;
 	private TBaseCollection baseColl = null;
@@ -67,28 +67,22 @@ public class Scenario extends MouseAdapter {
 	private MapFactory mapFactory = null;
 
 	public Scenario(TetraStarGUI gui, TFace tface){
-		this.gui = gui;
 		this.tface = tface;
-
 
 		roverFactory = new TRoverFactory();
 		mapFactory = new MapFactory();
-		guiMngr = new TetraGUIManager(gui, tface);
+		guiMngr = new TetraGUIManager(tface.getTotalRows(), tface.getTotalColumns(), this);
 
-		//add factory
-		inhabitantColl = new TInhabitantCollection(guiMngr);
-		baseColl = new TBaseCollection(guiMngr);
-		vehicleColl = new VehicleCollection(guiMngr);
-
-		gui.addMouseListener(this);
-
+		inhabitantColl = TInhabitantCollection.getInstance(guiMngr);
+		baseColl = TBaseCollection.getInstance(guiMngr);
+		vehicleColl = VehicleCollection.getInstance(guiMngr);
 
 		addVader();
-		
+
 		addTRovers();
-		
+
 		addHero();
-		
+
 		addMapBase();
 
 		addVaderBase();
@@ -105,37 +99,27 @@ public class Scenario extends MouseAdapter {
 
 	private void addRiver(){
 		firstriver = BaseFactory.createBase("River", tface.getPosition(2,3));
-		//firstriverView = new BaseView(gui.getCellDimension(), firstriver);
-		
 		secondriver = BaseFactory.createBase("River", tface.getPosition(3,2));
-		//secondriverView = new BaseView(gui.getCellDimension(), secondriver);
-		
 		thirdriver = BaseFactory.createBase("River", tface.getPosition(4,3));
-		//thirdriverView = new BaseView(gui.getCellDimension(), thirdriver);
-		
 		fourthriver = BaseFactory.createBase("River", tface.getPosition(3,4));
-		//fourthriverView = new BaseView(gui.getCellDimension(), fourthriver);
 	}
 
 
 	private void addVaderBase(){
 		vaderbase = BaseFactory.createBase("TVaderBase", tface.getPosition(3,3));
-		//vaderBaseView = new BaseView(guiMngr.getCellDimension(), vaderbase);	
 	}
 
 
 	private void addHeroBase(){
 		herobase = BaseFactory.createBase("THeroBase", tface.getPosition(0,0));
-		//heroBaseView = new BaseView(gui.getCellDimension(), herobase);
 	}
 
 
 
 	private void addMapBase(){
 		mapbase1 =(MapBase) BaseFactory.createBase("MapBase", tface.getPosition(1,6));
-		mapbase1.setTface(tface);
-		//mapBaseView1 = new BaseView(guiMngr.getCellDimension(), mapbase1);
-		
+		//mapbase1.setTface(tface);
+
 		map1 = mapFactory.createMap("StarAtlas", mapbase1.getPosition(), "M1");
 		map1.setItemCount(0);
 
@@ -146,41 +130,37 @@ public class Scenario extends MouseAdapter {
 		mapbase1.setMap(map1);
 
 		mapbase2 = (MapBase) BaseFactory.createBase("MapBase", tface.getPosition(7,4));
-		
+
 		map2 = mapFactory.createMap("StarMap", mapbase2.getPosition(), "M2");
 		map2.setDirection("Rovers displayed map!!");
 		map2.setItemCount(0);
-		
+
 		emap1 = new EncryptedStarMap(map2, getTHero().getEncryptionStrategy(), getTHero().getTetId(), "Jan 30 2020" , 0, getTHero().getSymbol());
 		mapbase2.setMap(emap1);
-		
+
 		mapbase3 = (MapBase) BaseFactory.createBase("MapBase", tface.getPosition(3, 0));
-	
+
 		map4 = mapFactory.createMap("StarMap", mapbase3.getPosition(), "M4");
 		map4.setDirection("Go 2,000 light year straight.");
 		map4.setItemCount(0);
-		
+
 		emap2= new EncryptedStarMap(map4, getTHero1().getEncryptionStrategy(), getTHero1().getTetId(), "Aug 30 2012" , 0, getTHero1().getSymbol());
 		mapbase3.setMap(emap2);
-		
-
-
 	}
 
 
 	private void addTRovers(){
 		trover1 = roverFactory.createTRover("TRover", tface.getPosition(5,6));
-		//firstroverView = (TRoverView) guiMngr.generateViews(trover1); 
 		trover1.setName("BumbleBee1");
 		trover1.setTetId("TR1");
 		trover1.setGender("M");
+		trover1.setMovementStrategy(new OrdinalDirectionMovement(tface));
 
 		trover2 = roverFactory.createTRover("TRover", tface.getPosition(7,0));
-		//secondroverView = (TRoverView) guiMngr.generateViews(trover2);
-		trover1.setName("BumbleBee2");
-		trover1.setTetId("TR2");
-		trover1.setGender("M");
-
+		trover2.setName("BumbleBee2");
+		trover2.setTetId("TR2");
+		trover2.setGender("M");
+		trover2.setMovementStrategy(new CardinalDirectionMovement(tface));
 	}
 
 	private void addVader(){
@@ -188,7 +168,7 @@ public class Scenario extends MouseAdapter {
 		tvader.setName("Megatron");
 		tvader.setTetId("V1");
 		tvader.setGender("M");
-		
+		tvader.setMovementStrategy(new TFlierMovement(tface));
 	}
 
 	private void addHero(){
@@ -198,22 +178,23 @@ public class Scenario extends MouseAdapter {
 		thero.setGender("M");
 		thero.setSymbol("@");
 		thero.setEncryptionStrategy(new EncryptionStrategyOne());
-	
+		thero.setMovementStrategy(new AllDirectionMovement(tface));
+
 		thero1 = (THero) roverFactory.createTRover("THero", tface.getPosition(0,0));
 		thero1.setName("OptimusPrime1");
 		thero1.setTetId("TH2");
 		thero1.setGender("M");
 		thero1.setSymbol("$");
 		thero1.setEncryptionStrategy(new EncryptionStrategyTwo());
-		
+		thero.setMovementStrategy(new CardinalDirectionMovement(tface));
 	}
 
 	private void addToCollection(){
-		
+
 		baseColl.addLocatableObject(herobase);
-		
+
 		baseColl.addLocatableObject(vaderbase);
-		
+
 		baseColl.addLocatableObject(firstriver);
 		baseColl.addLocatableObject(secondriver);
 		baseColl.addLocatableObject(thirdriver);
@@ -259,11 +240,11 @@ public class Scenario extends MouseAdapter {
 	public TVader getTvader() {
 		return tvader;
 	}
-	
+
 	public THero getTHero(){
 		return thero;
 	}
-	
+
 	public THero getTHero1(){
 		return thero1;
 	}

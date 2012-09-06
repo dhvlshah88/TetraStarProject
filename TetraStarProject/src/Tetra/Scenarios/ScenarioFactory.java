@@ -8,6 +8,11 @@ public class ScenarioFactory {
 	Scenario testcase = null;
 	
 	public Scenario createScenario(int testCaseNo, TetraStarGUI gui, TFace tface){
+		
+		if(testcase != null){
+			return testcase;
+		}
+		
 		switch (testCaseNo) {
 		case 1:
 			testcase = new ScenarioOne(gui, tface);

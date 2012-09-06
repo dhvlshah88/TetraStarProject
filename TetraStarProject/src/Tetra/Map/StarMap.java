@@ -107,7 +107,5 @@ public class StarMap extends Map {
 		// TODO Auto-generated method stub
 		
 	}
-     
-     
-     
+	 
 }

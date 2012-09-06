@@ -1,9 +1,6 @@
 package TetraGUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -14,9 +11,6 @@ import java.awt.Dimension;
 import javax.swing.JSeparator;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
@@ -29,9 +23,7 @@ import Tetra.Position;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.ComponentOrientation;
-import javax.swing.JRadioButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 public class TetraStarGUI extends JFrame {
 
@@ -39,10 +31,9 @@ public class TetraStarGUI extends JFrame {
 	private JPanel contentPane;
 	private JPanel[][] cellPanel = null;
 	static JTextArea taDisplaySteps = null;
-	private final int rows;
-	private final int columns;
+	private int rows;
+	private int columns;
 	Dimension cellDimension = null;
-	private int value;
 	JPanel gridPanel = null;
 	Border cellBorder = null;
 	Border selectedCellBorder = null;
@@ -52,8 +43,8 @@ public class TetraStarGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public TetraStarGUI(int rows, int columns) {
-		this.rows = rows;
-		this.columns = columns;
+		this.setRows(rows);
+		this.setColumns(columns);
 		setResizable(false);
 		setMaximumSize(new Dimension(1000, 600));
 		setTitle("Tetra Star Simulation");
@@ -174,10 +165,6 @@ public class TetraStarGUI extends JFrame {
 	}
 
 	public void initializeGrid(Position position, JPanel locatableViews){
-		/*if(cellPanel[position.getRowNo()][position.getColumnNo()].getComponentCount() != 0){
-			((JPanel)cellPanel[position.getRowNo()][position.getColumnNo()].getComponent(0)).add(locatableViews);
-		}else{*/
-//		}
 		cellPanel[position.getRowNo()][position.getColumnNo()].add(locatableViews);
 		gridPanel.revalidate();
 		gridPanel.repaint();
@@ -193,6 +180,34 @@ public class TetraStarGUI extends JFrame {
 		}
 		gridPanel.revalidate();
 		gridPanel.repaint();
+	}
+
+	/**
+	 * @return the rows
+	 */
+	public int getRows() {
+		return rows;
+	}
+
+	/**
+	 * @param rows the rows to set
+	 */
+	public void setRows(int rows) {
+		this.rows = rows;
+	}
+
+	/**
+	 * @return the columns
+	 */
+	public int getColumns() {
+		return columns;
+	}
+
+	/**
+	 * @param columns the columns to set
+	 */
+	public void setColumns(int columns) {
+		this.columns = columns;
 	}
 
 }

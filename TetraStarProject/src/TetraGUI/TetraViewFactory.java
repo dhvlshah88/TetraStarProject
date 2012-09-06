@@ -31,6 +31,7 @@ public class TetraViewFactory {
 		if(locatableObj instanceof Vehicle){
 			tetraViews = new VehicleView(cellDimension, ((Vehicle)locatableObj));
 		}
+		
 		return tetraViews;
 	}
 

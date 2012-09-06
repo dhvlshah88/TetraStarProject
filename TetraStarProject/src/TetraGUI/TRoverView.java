@@ -3,7 +3,6 @@ package TetraGUI;
 import javax.swing.JPanel;
 import Tetra.Inhabitant.TRovers;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.BorderLayout;

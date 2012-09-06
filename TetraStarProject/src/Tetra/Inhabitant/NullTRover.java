@@ -65,15 +65,6 @@ public class NullTRover extends TRovers {
 	}
 
 	@Override
-	public TFace getTface() {
-		return null;
-	}
-
-	@Override
-	public void setTface(TFace tface) {
-	}
-	
-	@Override
 	public String getImageFilePath() {
 		return null;
 	}

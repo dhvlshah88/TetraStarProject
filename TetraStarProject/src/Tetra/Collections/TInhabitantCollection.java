@@ -18,14 +18,24 @@ import Tetra.Inhabitant.TRovers;
  */
 public class TInhabitantCollection extends Observable{
 
+	private static TInhabitantCollection instance = null;
+	
 	private HashMap<Position, ILocatable> inhabitantCollection = null;
+	
 	private boolean isPresent = false;
 
-	public TInhabitantCollection(TetraGUIManager guiMngr){
+	private TInhabitantCollection(TetraGUIManager guiMngr){
 		inhabitantCollection = new HashMap<Position, ILocatable>();
-		addObserver(guiMngr);
+		super.addObserver(guiMngr);
 	}
 
+	public static TInhabitantCollection getInstance(TetraGUIManager guiMngr) {
+		if(instance == null) {
+			instance = new TInhabitantCollection(guiMngr);
+		}
+		return instance;
+	}
+	
 	/**
 	 * This method checks whether the next position provided by the movement strategy to TRover, THero and TVader is 
 	 * already acquired by any one else.
@@ -97,27 +107,22 @@ public class TInhabitantCollection extends Observable{
 	}
 	
 	
-	public HashMap<Position, ILocatable> getLocatable(){
+	public HashMap<Position, ILocatable> getCollection(){
 		return inhabitantCollection;
 	}
 	
-	public void removeLocatableAtPosition(Position nextPosition){
+	/*public void removeLocatableAtPosition(Position nextPosition){
 		if(nextPosition == null){
 			return;
 		}
 		
 		inhabitantCollection.remove(nextPosition);
 		locatableChanged(null);
-	}
+	}*/
 	
 	public void locatableChanged(ILocatable locatableObj){
 		setChanged();
 		notifyObservers(locatableObj);
 	}
 
-	@Override
-	public synchronized void addObserver(Observer o) {
-		// TODO Auto-generated method stub
-		super.addObserver(o);
-	}
 }

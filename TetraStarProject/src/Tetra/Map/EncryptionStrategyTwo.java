@@ -18,7 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Dhaval
  *
  */
-public class EncryptionStrategyTwo implements IEncrytionStrategy {
+public class EncryptionStrategyTwo implements IEncryptionStrategy {
 
 	/* (non-Javadoc)
 	 * @see Tetra.IEncrytionStrategy#encryptDirection(java.lang.String)

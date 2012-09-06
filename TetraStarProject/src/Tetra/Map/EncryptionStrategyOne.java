@@ -8,7 +8,7 @@ package Tetra.Map;
  * @author Dhaval
  *
  */
-public class EncryptionStrategyOne implements IEncrytionStrategy {
+public class EncryptionStrategyOne implements IEncryptionStrategy {
 
 	/* (non-Javadoc)
 	 * @see Tetra.IEncrytionStrategy#encryptDirection(java.lang.String)

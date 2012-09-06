@@ -132,4 +132,5 @@ public class StarAtlas extends Map {
 	public String getImageFilePath() {
 		return "src/images/StarAtlas.jpg";
 	}
+	
 }

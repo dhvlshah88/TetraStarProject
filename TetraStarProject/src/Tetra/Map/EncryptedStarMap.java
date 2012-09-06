@@ -4,7 +4,6 @@
 package Tetra.Map;
 
 import java.util.ArrayList;
-import Tetra.StarSignal;
 
 /**
  * @author Dhaval
@@ -16,11 +15,11 @@ public class EncryptedStarMap extends Map {
 	private String tHeroId;
 	private String encryptionDate;
 	private int restorationCounter;
-	private IEncrytionStrategy encryptionStrategy;
+	private IEncryptionStrategy encryptionStrategy;
 	private boolean isEncrypted = true;
 	private String symbol;
 	
-	public EncryptedStarMap(Map map, IEncrytionStrategy encryptionStrategy, String tHeroId, String encryptionDate, int restorationCounter, String symbol){
+	public EncryptedStarMap(Map map, IEncryptionStrategy encryptionStrategy, String tHeroId, String encryptionDate, int restorationCounter, String symbol){
 		this.map = map;
 		this.encryptionStrategy = encryptionStrategy;
 		this.tHeroId = tHeroId;

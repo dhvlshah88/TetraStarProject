@@ -13,12 +13,21 @@ import Tetra.Inhabitant.Vehicle.Vehicle;
 public class VehicleCollection extends Observable {
 	
 	private HashMap<Position, ILocatable> vehicleCollection = null;
-
-	public VehicleCollection(TetraGUIManager guiMngr){
+	private static VehicleCollection instance = null;
+	
+	
+	private VehicleCollection(TetraGUIManager guiMngr){
 		vehicleCollection = new HashMap<Position, ILocatable>();
-		addObserver(guiMngr);
+		super.addObserver(guiMngr);
 	}
 
+	public static VehicleCollection getInstance(TetraGUIManager guiMngr) {
+		if(instance == null) {
+			instance = new VehicleCollection(guiMngr);
+		}
+		return instance;
+	}
+	
 	/**
 	 * This method checks whether the next position provided by the movement strategy to TRover, THero and TVader is 
 	 * already acquired by any one else.
@@ -89,11 +98,11 @@ public class VehicleCollection extends Observable {
 	}
 	
 	
-	public HashMap<Position, ILocatable> getLocatable(){
+	public HashMap<Position, ILocatable> getCollection(){
 		return vehicleCollection;
 	}
 	
-	public void removeLocatableAtPosition(Position nextPosition){
+/*	public void removeLocatableAtPosition(Position nextPosition){
 		if(nextPosition == null){
 			return;
 		}
@@ -101,16 +110,11 @@ public class VehicleCollection extends Observable {
 		vehicleCollection.remove(nextPosition);
 		//locatableChanged(null);
 	}
-	
+	*/
 	public void locatableChanged(ILocatable locatableObj){
 		setChanged();
 		notifyObservers(locatableObj);
 	}
-	
-	@Override
-	public synchronized void addObserver(Observer o) {
-		// TODO Auto-generated method stub
-		super.addObserver(o);
-	}
+
 
 }

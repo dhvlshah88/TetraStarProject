@@ -13,11 +13,13 @@ import Tetra.Position;
  */
 public class TRoverFactory {
 
-	private TVader tVader=null;
-
+	private TVader tVader = null;
+	private TRovers tRover = null;
+	
 	public TRovers createTRover(String type, Position currentPosition){
 
-		TRovers tRover = new NullTRover(currentPosition);
+		tRover = new NullTRover(currentPosition);
+		
 		if (type.equalsIgnoreCase("TRover")) {
 			tRover = new TRovers(currentPosition);
 		} else if (type.equalsIgnoreCase("THero")) {

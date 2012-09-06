@@ -1,34 +1,30 @@
 package Tetra.Inhabitant;
 
 import Tetra.ILocatable;
-import Tetra.ScreenLogger;
+import Tetra.TetraGUIManager;
 import Tetra.Position;
-import Tetra.TFace;
 import Tetra.Base.MapBase;
-import Tetra.Base.River;
-import Tetra.Base.THeroBase;
 import Tetra.Base.TVaderBase;
 import Tetra.Collections.TBaseCollection;
 import Tetra.Collections.TInhabitantCollection;
 import Tetra.Collections.VehicleCollection;
 import Tetra.Inhabitant.Movement.IMovementStrategy;
-import Tetra.Inhabitant.Vehicle.Vehicle;
-import Tetra.Map.EncryptedStarMap;
 import Tetra.Map.Map;
 import Tetra.Map.StarAtlas;
+import TetraGUI.MapViewFactory;
 import TetraGUI.StarAtlasView;
 import TetraGUI.StarMapView;
 
 
 public class TRovers implements ILocatable {
 
-	private String gender;
-	private String tetId;
-	private String name;
+	private String gender = null;
+	private String tetId = null;
+	private String name = null;
 	private Position currentPosition = null;
 	private Position previousPosition = null;
 	private Position vaderBasePosition = null;
-	private TFace tface;
+	private Position nextPosition = null;
 	private IMovementStrategy movementStrategy = null;
 	private TInhabitantCollection inhabitantColl = null;
 	private TBaseCollection baseColl = null;
@@ -143,22 +139,6 @@ public class TRovers implements ILocatable {
 		return previousPosition;
 	}
 
-	/**
-	 * 
-	 * @param tface
-	 */
-	public void setTface(TFace tface) {
-		this.tface = tface;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public TFace getTface() {
-		return tface;
-	}
-
 	public void setInhabitantColl(TInhabitantCollection inhabitantColl) {
 		this.inhabitantColl = inhabitantColl;
 	}
@@ -200,30 +180,22 @@ public class TRovers implements ILocatable {
 	}
 
 	public void displayMap(Map map){
-		String mapType = map.getType();
-		if( mapType == "StarMap" || mapType == "EncryptedStarMap"){
-			StarMapView starMapView = new StarMapView();
-			starMapView.setStarMap(map);
-			starMapView.setVisible(true);
-		}else{
-			StarAtlasView starAtlasView = new StarAtlasView();
-			starAtlasView.setStarAtlas((StarAtlas)map);
-			starAtlasView.setVisible(true);
-		}
+		TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") is display map (ID:" + map.getMapId() + ").");
+		MapViewFactory mapView = new MapViewFactory();
+		mapView.createMapView(map);
 	}
 
-
-	/*public void moveToPosition(){
+	public void moveToPosition(){
 		nextPosition = this.getMovementStrategy().getNewPosition(this.getPosition());
 		moveToPosition(nextPosition);
-	}*/
+	}
 
 	public void moveToPosition(Position nextPosition){
 
 		if(inhabitantColl.objectAt(nextPosition)){
-			ScreenLogger.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ") cannot move to Location (" 
+			TetraGUIManager.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ") cannot move to Location (" 
 					+ nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ") as ");
-			ScreenLogger.DisplaySteps(((TRovers)inhabitantColl.getLocatableAtPosition(nextPosition)).getType() + " present at that location!!");
+			TetraGUIManager.DisplaySteps(((TRovers)inhabitantColl.getLocatableAtPosition(nextPosition)).getType() + " present at that location!!");
 			return;
 		}
 
@@ -232,10 +204,12 @@ public class TRovers implements ILocatable {
 			if(locatableObj instanceof MapBase){
 				inhabitantColl.changePosition(this.getPosition(), nextPosition);
 				this.setPosition(nextPosition);
+				TetraGUIManager.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ")  moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 				this.enterMapBase(locatableObj);
+				return;
 			}
 
-			ScreenLogger.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ") has cannot moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+			TetraGUIManager.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ")  cannot moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 			return;
 		}
 
@@ -246,16 +220,16 @@ public class TRovers implements ILocatable {
 
 		inhabitantColl.changePosition(this.getPosition(), nextPosition);
 		this.setPosition(nextPosition);
-
+		TetraGUIManager.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ")  moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 	}
 
 	public void enterMapBase(ILocatable locatableObj){
-		ScreenLogger.DisplaySteps("TRover " + this.getTetId() + " enters map base.");
+		TetraGUIManager.DisplaySteps("TRover " + this.getTetId() + " enters map base.");
 
 		MapBase mapBase = (MapBase) locatableObj;
 		if(mapBase.isMapPresent()){
 			Map map = mapBase.getMap();
-			ScreenLogger.DisplaySteps("TRover " + this.getTetId() + " found the map " + map.getMapId() + ".");
+			TetraGUIManager.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ") found the map " + map.getMapId() + ".");
 			this.displayMap(map);
 		}
 	}

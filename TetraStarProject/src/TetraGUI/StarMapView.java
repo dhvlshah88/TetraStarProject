@@ -16,8 +16,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import Tetra.Map.Map;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -31,7 +29,6 @@ public class StarMapView extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
-	Map map = null;
 	private JLabel lblId;
 	private JLabel lblStarmapid;
 	private JLabel lblItems;
@@ -57,14 +54,6 @@ public class StarMapView extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StarMapView.class.getResource("/images/StarMap.jpg")));
 		setTitle("StarMap");
 
-
-		/*addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseExited(MouseEvent e) {
-				setVisible(false);
-
-			}
-		});*/
 		setBounds(100, 100, 515, 355);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -249,29 +238,28 @@ public class StarMapView extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-		
+		setVisible(true);		
 	}
 
-	private void setValues(Map map){
+	public void setStarMap(Map starMap){
+		lblStarmapid.setText(starMap.getMapId());
+		lblItemsCount.setText(starMap.getItemCount()+"");
+		lblLocid.setText(starMap.getPositionId());
+		lblMessage_1.setText(starMap.getDirection());
 		
-		lblStarmapid.setText(map.getMapId());
-		lblItemsCount.setText(map.getItemCount()+"");
-		lblLocid.setText(map.getPositionId());
-		lblMessage_1.setText(map.getDirection());
-		
-		if(map.isEncrypted()){
-			lblDate.setText(map.getEncryptionDate());
-			lblSymbol_1.setText(map.getSymbol());
-			lblTheroid_1.setText(map.getTHeroId());
+		if(starMap.isEncrypted()){
+			lblDate.setText(starMap.getEncryptionDate());
+			lblSymbol_1.setText(starMap.getSymbol());
+			lblTheroid_1.setText(starMap.getTHeroId());
 			
 			String symbol_="";
 			for (int i = 0; i < 50 ; i++ ) {
-				symbol_=symbol_ + map.getSymbol(); 
+				symbol_=symbol_ + starMap.getSymbol(); 
 			}
 			lblSymbols_1.setText(symbol_);
 			lblSymbols.setText(symbol_);
 			setTitle("Encrypted StarMap");
-
+			
 			lblTheroid.setVisible(true);
 			lblTheroid_1.setVisible(true);
 			lblSymbols_1.setVisible(true);
@@ -281,14 +269,5 @@ public class StarMapView extends JDialog {
 			lblDate_.setVisible(true);
 			lblSymbol_1.setVisible(true);
 		}
-	}
-
-	public void setStarMap(Map mapInstance){
-		this.map = mapInstance;
-		setValues(map);
-	}
-	
-	public Map getStarMap(){
-		return map;
 	}
 }

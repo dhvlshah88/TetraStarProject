@@ -17,8 +17,6 @@ public abstract class Base implements ILocatable {
 	
 	private String baseId = null;
 	
-	private TFace tfaceObj = null;
-	
 	public Base(){
 		
 	}
@@ -28,13 +26,6 @@ public abstract class Base implements ILocatable {
 		this.baseId = baseId.concat(basePosition.toString());
 	}
 	
-	public void setTface(TFace tfaceObj){
-		this.tfaceObj = tfaceObj;
-	}
-	
-	public TFace getTface(){
-		return tfaceObj;
-	}
 	
 	public void setPosition(Position basePosition){
 		this.currentPosition = basePosition;

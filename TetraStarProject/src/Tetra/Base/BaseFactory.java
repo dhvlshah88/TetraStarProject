@@ -13,12 +13,14 @@ import Tetra.Position;
  */
 public class BaseFactory {
 	
+	private static Base base = null;
+	
 	// Factory method which creates any base given its basetype.
 	public static Base createBase(String baseType, Position basePosition){
 		
 		// This reference variable is been instantiated with NullBase instance that is a null object. 
 		// These is done in order to avoid null pointer exception if the base instance is not created properly.
-		Base base = new NullBase();
+		base = new NullBase();
 		
 		if(baseType.equalsIgnoreCase("THeroBase")){
 			base = new THeroBase(basePosition);

@@ -1,6 +1,5 @@
 package TetraGUI;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -21,6 +20,10 @@ import java.awt.event.ActionEvent;
 
 public class FinalSimulation extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2376199286694715961L;
 	private JPanel contentPane;
 	private TFace tface = null;
 	Scenario scenario = null; 

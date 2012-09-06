@@ -7,9 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Tetra.ILocatable;
-import Tetra.ScreenLogger;
+import Tetra.TetraGUIManager;
 import Tetra.Position;
-import Tetra.StarSignal;
 import Tetra.Base.MapBase;
 import Tetra.Base.THeroBase;
 import Tetra.Base.TVaderBase;
@@ -18,13 +17,11 @@ import Tetra.Collections.TInhabitantCollection;
 import Tetra.Collections.VehicleCollection;
 import Tetra.Inhabitant.Vehicle.Vehicle;
 import Tetra.Map.EncryptedStarMap;
-import Tetra.Map.IEncrytionStrategy;
+import Tetra.Map.IEncryptionStrategy;
 import Tetra.Map.Map;
-import Tetra.Map.StarAtlas;
 import Tetra.Map.StarMap;
-import TetraGUI.StarAtlasView;
-import TetraGUI.StarMapView;
-
+import Tetra.Map.StarSignal;
+import TetraGUI.MapViewFactory;
 
 /**
  * @author Dhaval
@@ -32,13 +29,12 @@ import TetraGUI.StarMapView;
  */
 public class THero extends TRovers {
 
-	private IEncrytionStrategy eStrategy;
+	private IEncryptionStrategy eStrategy;
 	private Map map;
 	private Map clonedMap;
 	private boolean mapPresent = false;
 	private boolean clonedMapPresent = false;
 	private String mapId = null;
-	private boolean isBase = false;
 	private boolean mapStolen = false;
 	private String symbol = "*";
 	private Date dateNow;
@@ -48,8 +44,6 @@ public class THero extends TRovers {
 	private VehicleCollection vehicleColl = null;
 	private Position nextPosition = null;
 	private ILocatable locatableObj = null;
-	private Position lastVisitedMapBasePosition = null; 
-	private boolean requestVehicle = false;
 	private Vehicle vehicle = null;
 
 	/**
@@ -79,11 +73,11 @@ public class THero extends TRovers {
 		return mapId;
 	}
 
-	public void setEncryptionStrategy(IEncrytionStrategy eStrategy){
+	public void setEncryptionStrategy(IEncryptionStrategy eStrategy){
 		this.eStrategy = eStrategy;
 	}
 
-	public IEncrytionStrategy getEncryptionStrategy(){
+	public IEncryptionStrategy getEncryptionStrategy(){
 		return eStrategy;
 	}
 
@@ -136,7 +130,7 @@ public class THero extends TRovers {
 	}
 
 	public Map returnClonedMap(){
-		ScreenLogger.DisplaySteps("THero " + this.getTetId() + " returns cloned map in hero base.");	
+		TetraGUIManager.DisplaySteps("THero " + this.getTetId() + " returns cloned map in hero base.");	
 		Map tempMap;
 		tempMap = clonedMap;
 		clonedMap = null;
@@ -148,27 +142,41 @@ public class THero extends TRovers {
 		clonedMapPresent = true;
 	}
 
-	public void displayMap(Map map){
-		ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") is display map (ID:" + map.getMapId() + ").");
-
-		String mapType = map.getType();
-		if( mapType == "StarMap" || mapType == "EncryptedStarMap"){
-			StarMapView starMapView = new StarMapView();
-			starMapView.setStarMap(map);
-			starMapView.setVisible(true);
-		}else{
-			StarAtlasView starAtlasView = new StarAtlasView();
-			starAtlasView.setStarAtlas((StarAtlas)map);
-			starAtlasView.setVisible(true);
-		}
-	}
-
 	public boolean isMapPresent(){
 		return mapPresent;
 	}
 
 	public boolean isCloneMapPresent(){
 		return clonedMapPresent;
+	}
+
+	public ILocatable validatePosition(Position nextPosition){
+
+		inhabitantColl = super.getInhabitantColl();
+		if(inhabitantColl.objectAt(nextPosition)){
+			locatableObj = inhabitantColl.getLocatableAtPosition(nextPosition);
+			return locatableObj;		
+		}
+		
+		tbaseColl = super.getBaseColl();
+		if(tbaseColl.objectAt(nextPosition)){
+			locatableObj = tbaseColl.getLocatableAtPosition(nextPosition);
+			return locatableObj;
+		}
+
+		vehicleColl = super.getVehicleColl();
+		if(vehicleColl.objectAt(nextPosition)){
+			locatableObj = vehicleColl.getLocatableAtPosition(nextPosition);
+			return locatableObj;
+		}
+		
+		return null;
+	}
+	
+	public void moveAStep(Position nextPosition){
+		inhabitantColl.changePosition(this.getPosition(), nextPosition);
+		this.setPosition(nextPosition);
+		TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 	}
 
 	public void moveToPosition(Position nextPosition){
@@ -180,9 +188,9 @@ public class THero extends TRovers {
 
 		inhabitantColl = super.getInhabitantColl();	
 		if(inhabitantColl.objectAt(nextPosition)){
-			ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") cannot move to Location (" 
+			TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") cannot move to Location (" 
 					+ nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ") as ");
-			ScreenLogger.DisplaySteps(((TRovers)inhabitantColl.getLocatableAtPosition(nextPosition)).getType() + " present at that location!!");
+			TetraGUIManager.DisplaySteps(((TRovers)inhabitantColl.getLocatableAtPosition(nextPosition)).getType() + " present at that location!!");
 			return;
 		}
 
@@ -193,7 +201,7 @@ public class THero extends TRovers {
 			if(locatableObj instanceof THeroBase){
 				inhabitantColl.changePosition(this.getPosition(), nextPosition);
 				this.setPosition(nextPosition);
-				ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+				TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 				enterHeroBase(locatableObj);
 				return;
 			}
@@ -201,7 +209,7 @@ public class THero extends TRovers {
 			if(locatableObj instanceof TVaderBase){
 				inhabitantColl.changePosition(this.getPosition(), nextPosition);
 				this.setPosition(nextPosition);
-				ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+				TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 				enterVaderBase(locatableObj);
 				return;
 			}
@@ -209,11 +217,11 @@ public class THero extends TRovers {
 			if(locatableObj instanceof MapBase){
 				inhabitantColl.changePosition(this.getPosition(), nextPosition);
 				this.setPosition(nextPosition);
-				ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+				TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 				enterMapBase(locatableObj);
 				return;
 			}
-			ScreenLogger.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ") has cannot moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+			TetraGUIManager.DisplaySteps("TRover " + getName() + " (ID: " + getTetId() + ") has cannot moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 			return;
 		}
 
@@ -230,64 +238,11 @@ public class THero extends TRovers {
 
 		inhabitantColl.changePosition(this.getPosition(), nextPosition);
 		this.setPosition(nextPosition);
-		ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+		TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 	}
 
-	/*public void moveToPosition(Position nextPosition){
-		if(!isBase && !mapStolen && !clonedMapPresent){
-			if(locatableColl.objectAt(nextPosition)){
-
-				locatableObj = locatableColl.getLocatableAtPosition(nextPosition);
-
-				if(locatableObj instanceof TRovers){
-					return;
-				}
-
-				if(locatableObj instanceof River){
-					return;
-				}else if(locatableObj instanceof THeroBase){
-					isBase = true;
-				}else if(locatableObj instanceof MapBase){
-					isBase = true;
-				}else if(locatableObj instanceof TVaderBase){
-					isBase = true;
-				}
-
-				if(locatableObj instanceof Vehicle){
-					if(requestVehicle){
-						Vehicle vehicle = ((Vehicle) locatableObj);
-						if(!vehicle.isPossessed()){
-							this.setVehicle(vehicle);
-							locatableColl.removeLocatableAtPosition(nextPosition);
-							requestVehicle = false;
-						}
-						return;
-					}
-				}
-			}
-		}else if(isBase){
-			if(locatableObj instanceof THeroBase){
-				enterHeroBase(locatableObj);
-			}else if(locatableObj instanceof MapBase){
-				enterMapBase(locatableObj);
-			}else if(locatableObj instanceof TVaderBase){
-				enterVaderBase(locatableObj);
-			}
-			isBase = false;
-			return;
-		}else if(clonedMapPresent){
-			nextPosition = lastVisitedMapBasePosition;
-			isBase = true;
-		}
-
-		locatableColl.changePosition(this.getPosition(), nextPosition);
-		this.setPosition(nextPosition);
-
-	}*/
-
-
 	public void enterHeroBase(ILocatable locatableObj){
-		ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") enters hero base.");	
+		TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") enters hero base.");	
 
 		THeroBase heroBase = (THeroBase) locatableObj;
 		if(clonedMapPresent){
@@ -297,27 +252,27 @@ public class THero extends TRovers {
 	}
 
 	public void enterMapBase(ILocatable locatableObj){
-		ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") enters map base.");
+		TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") enters map base.");
 
 		MapBase mapBase = (MapBase) locatableObj;
 		if(mapBase.isMapPresent()){
 			Map map = mapBase.getMap();
-			ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") found the map " + map.getMapId() + ".");
+			TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") found the map " + map.getMapId() + ".");
 
 			if(map.isEncrypted()){
 				if(((EncryptedStarMap) map).getTHeroId().equals(super.getTetId())){
-					ScreenLogger.DisplaySteps("Map is encrypted by him.");
+					TetraGUIManager.DisplaySteps("Map is encrypted by him.");
 					decryptMap(map);
-					ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has decrypted map.");
+					TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has decrypted map.");
 					displayMap(map);
-					ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") now display's decrypted map.");
+					TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") now display's decrypted map.");
 					encryptMap(map);
-					ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has encrypted map.");
+					TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") has encrypted map.");
 					displayMap(map);
-					ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") now display's encrypted map.");
+					TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") now display's encrypted map.");
 				}
 				else{
-					ScreenLogger.DisplaySteps("Map is encrypted by other hero (" + map.getTHeroId() + ")");
+					TetraGUIManager.DisplaySteps("Map is encrypted by other hero (" + map.getTHeroId() + ")");
 					map = new EncryptedStarMap(map, null, getTetId(), map.getEncryptionDate(), 0, this.symbol);
 					displayMap(map);
 				}
@@ -327,51 +282,50 @@ public class THero extends TRovers {
 		}
 		else{
 			if(this.mapId != mapBase.getMapId()){
-				ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") couldn't find the map " + mapBase.getMapId() + ".");
-				ScreenLogger.DisplaySteps("TVader has stolen it.");
+				TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") couldn't find the map " + mapBase.getMapId() + ".");
+				TetraGUIManager.DisplaySteps("TVader has stolen it.");
 				mapStolen = true;
 				this.mapId = mapBase.getMapId();
-				requestVehicle = true;
 				return;
 			}
 
 			mapBase.setMap(returnMap());
-			ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") returned encrypted map in map base.");
+			TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") returned encrypted map in map base.");
 
 		}
-		this.lastVisitedMapBasePosition = locatableObj.getPosition();
+		locatableObj.getPosition();
 	}
 
 	public void enterVaderBase(ILocatable locatableObj){
-		ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") enters vader base.");
+		TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") enters vader base.");
 
 		TVaderBase vaderBase = (TVaderBase)locatableObj;
 		if(!vaderBase.isMapPresent()){
 			return;
 		}
-		
-		ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") signals the stolen map for it's presence.");
-		
+
+		TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") signals the stolen map for it's presence.");
+
 		StarSignal signal = vaderBase.getMap().showSignal(mapId);
 
-		
+
 		if(!signal.isMapIdentical()){
 			return;
 		}
 		else{
-			ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") got green signal!!");
+			TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") got green signal!!");
 
 			this.map = vaderBase.removeMap();
-			
-			ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") found decrypted map (ID:" + map.getMapId() + ").");
+
+			TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") found decrypted map (ID:" + map.getMapId() + ").");
 
 			try {
 				this.cloneMap(map);
-				ScreenLogger.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") clone's map!!");	
+				TetraGUIManager.DisplaySteps("THero " + getName() + " (ID: " + getTetId() + ") clone's map!!");	
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 			}
-			
+
 			displayMap(encryptMap(map));
 			mapStolen = false;
 			mapPresent = true;
@@ -398,7 +352,18 @@ public class THero extends TRovers {
 	 * 
 	 * @return
 	 */
+	@Override
 	public String getImageFilePath(){
 		return "/images/Optimus.png";
+	}
+	
+	
+	public void sleep(){
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

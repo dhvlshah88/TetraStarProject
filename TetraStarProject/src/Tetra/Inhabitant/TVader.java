@@ -6,10 +6,9 @@ package Tetra.Inhabitant;
 import java.util.ArrayList;
 
 import Tetra.ILocatable;
-import Tetra.ScreenLogger;
+import Tetra.TetraGUIManager;
 import Tetra.Position;
 import Tetra.Base.MapBase;
-import Tetra.Base.THeroBase;
 import Tetra.Base.TVaderBase;
 import Tetra.Collections.TBaseCollection;
 import Tetra.Collections.TInhabitantCollection;
@@ -61,16 +60,16 @@ public class TVader extends TRovers {
 		}
 		this.stolenMap = base.removeMap();
 		stolenMap.setEncrypted(false);
-		ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has decrypted the map.");
+		TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has decrypted the map.");
 		
 	}
 
 	public void moveToPosition(Position nextPosition){
 		inhabitantColl = super.getInhabitantColl();	
 		if(inhabitantColl.objectAt(nextPosition)){
-			ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") cannot move to Location (" 
+			TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") cannot move to Location (" 
 					+ nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ") as ");
-			ScreenLogger.DisplaySteps(((TRovers)inhabitantColl.getLocatableAtPosition(nextPosition)).getType() + " present at that location!!");
+			TetraGUIManager.DisplaySteps(((TRovers)inhabitantColl.getLocatableAtPosition(nextPosition)).getType() + " present at that location!!");
 			return;
 		}
 
@@ -82,7 +81,7 @@ public class TVader extends TRovers {
 
 				inhabitantColl.changePosition(this.getPosition(), nextPosition);
 				this.setPosition(nextPosition);
-				ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+				TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 				enterVaderBase(locatableObj);
 				return;
 			}
@@ -91,13 +90,13 @@ public class TVader extends TRovers {
 				if(traceOn){
 					inhabitantColl.changePosition(this.getPosition(), nextPosition);
 					this.setPosition(nextPosition);
-					ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+					TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 				}
 				enterMapBase(locatableObj);
 				return;
 			}
 
-			ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has cannot moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+			TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has cannot moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 			return;
 		}
 
@@ -107,7 +106,7 @@ public class TVader extends TRovers {
 
 		if(traceOn){
 			recordMove(nextPosition);
-			ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");			
+			TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has moved to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");			
 		}
 	}
 
@@ -125,28 +124,28 @@ public class TVader extends TRovers {
 		}
 		length--;
 		nextPosition = positionList.remove(length);
-		ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") retracing to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
+		TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") retracing to Location (" + nextPosition.getRowNo() + ", " + nextPosition.getColumnNo() + ")");
 		moveToPosition(nextPosition);
 	}
 
 	public void enterMapBase(ILocatable locatableObj){
-		ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has entered map base searching for map.");
+		TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has entered map base searching for map.");
 		MapBase mapBase = (MapBase) locatableObj;
 		if(!mapBase.isMapPresent()){
-			ScreenLogger.DisplaySteps("Map not found there");
+			TetraGUIManager.DisplaySteps("Map not found there");
 			return;
 		}
 
 		stealMap(mapBase);
 
-		ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has stolen map (ID: " + mapBase.getMapId() + ").");
+		TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has stolen map (ID: " + mapBase.getMapId() + ").");
 	}
 
 	public void enterVaderBase(ILocatable locatableObj){
-		ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has entered his base.");
+		TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has entered his base.");
 		TVaderBase vaderBase = (TVaderBase) locatableObj;
 		vaderBase.setMap(stolenMap);
-		ScreenLogger.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has stored stolen map (ID: " + stolenMap.getMapId() + ").");
+		TetraGUIManager.DisplaySteps("TVader " + getName() + " (ID: " + getTetId() + ") has stored stolen map (ID: " + stolenMap.getMapId() + ").");
 	}
 
 	public String getType(){

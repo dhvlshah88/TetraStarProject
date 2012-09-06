@@ -1,34 +1,29 @@
 package Tetra;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-
 import Tetra.Inhabitant.TRovers;
+import Tetra.Scenarios.Scenario;
 import TetraGUI.TetraStarGUI;
 import TetraGUI.TetraViewFactory;
 
 
 public class TetraGUIManager implements Observer{
 
-	private TFace tfaceObj = null;
 	private TetraStarGUI gui = null;
 	private ILocatable locatableObj = null;
 	private TetraViewFactory viewFactory = null;
 
 	public TetraGUIManager() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	public TetraGUIManager(TetraStarGUI gui, TFace tfaceObj){
-		this.gui = gui;
-		this.tfaceObj = tfaceObj;
-		//observableObj.addObserver(this);
+	public TetraGUIManager(int rows, int columns, Scenario scenario){
+		this.gui = new TetraStarGUI(rows, columns);
+		gui.addMouseListener(scenario);
 	}
 
 	@Override
@@ -68,6 +63,15 @@ public class TetraGUIManager implements Observer{
 	public JPanel generateViews(ILocatable locatableObj){
 		viewFactory = new TetraViewFactory(this.getCellDimension());
 		return viewFactory.generateViews(locatableObj);
+	}
+	
+	/**
+	 * This static method calls <code>DisplaySteps()</code> method of <code>TetraStarGUI</code> class to print steps
+	 * executed on GUI's text area component.
+	 * @param steps 
+	 */
+	public static void DisplaySteps(String steps){
+		TetraStarGUI.DisplaySteps(steps);
 	}
 
 }

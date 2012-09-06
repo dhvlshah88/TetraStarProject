@@ -1,17 +1,17 @@
 package Tetra.Map;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import Tetra.ILocatable;
 import Tetra.Position;
-import Tetra.StarSignal;
 
 
 
 public abstract class Map implements Cloneable, ILocatable {
 
 	private String mapId = null;
-	private String locationId;
+	private String locationId = null;
 	private int itemCount;
 	private Position currentPosition = null;
 
@@ -87,19 +87,11 @@ public abstract class Map implements Cloneable, ILocatable {
 	}
 	
 	/**
-	 * this methods returns the Map type of object.
+	 * this methods returns clone of Map type of object.
 	 */
 	@Override
 	public Map clone() throws CloneNotSupportedException {
-		Map map = null;
-		if(this.getType() == "StarMap"){
-			map = new StarMap(this.getPosition(), this.getMapId());
-			map.setDirection(this.getDirection());
-		}else{
-			map = new StarAtlas(this.getPosition(), this.getMapId());
-			map.setStarMapList(this.getStarMapList());
-		}
-		return map;
+		return (Map)super.clone();
 	}
 	
 	/**

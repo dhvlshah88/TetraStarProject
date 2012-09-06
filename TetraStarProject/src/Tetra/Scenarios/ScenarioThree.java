@@ -2,11 +2,8 @@ package Tetra.Scenarios;
 
 import java.awt.event.MouseEvent;
 
-import javax.swing.text.AbstractDocument.BranchElement;
-
 import Tetra.Position;
 import Tetra.TFace;
-import Tetra.Inhabitant.TRovers;
 import Tetra.Inhabitant.TVader;
 import TetraGUI.TetraStarGUI;
 

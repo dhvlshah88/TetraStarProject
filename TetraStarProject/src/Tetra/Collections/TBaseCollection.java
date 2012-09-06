@@ -10,16 +10,25 @@ import Tetra.TetraGUIManager;
 import Tetra.Base.Base;
 
 public class TBaseCollection extends Observable {
-
+	
+	
+	private static TBaseCollection instance = null;
 	private HashMap<Position, ILocatable> tbaseCollection;
 	private boolean isPresent = false;
 	
 	/**
 	 * Default Constructor
 	 */
-	public TBaseCollection(TetraGUIManager guiMngr){
+	private TBaseCollection(TetraGUIManager guiMngr){
 		tbaseCollection =  new HashMap<Position, ILocatable>();
-		addObserver(guiMngr);
+		super.addObserver(guiMngr);
+	}
+	
+	public static TBaseCollection getInstance(TetraGUIManager guiMngr){
+		if(instance == null) {
+			instance = new TBaseCollection(guiMngr);
+		}
+		return instance;
 	}
 
 	/**
@@ -63,7 +72,7 @@ public class TBaseCollection extends Observable {
 		return true;
 	}
 
-	public HashMap<Position, ILocatable> getLocatable(){
+	public HashMap<Position, ILocatable> getCollection(){
 		return tbaseCollection;
 	}
 
@@ -81,30 +90,10 @@ public class TBaseCollection extends Observable {
 		return tbaseCollection.get(nextPosition);
 	}
 	
-
-	/**
-	 * This method update inhabitantPositionCollection object i.e. Hash Map by the next valid position of the inhabitant.
-	 * This method removes the old position it contained and updates with new. On successful updation of the position, 
-	 * method returns true value.
-	 * @return {@link Boolean}
-	 */
-	public boolean changePosition(Position currentPosition, Position nextPosition) {
-		return false;
-	}
-	
-	
-	public void removeLocatableAtPosition(Position nextPosition){
-	}
 	
 	public void locatableChanged(ILocatable locatableObj){
 		setChanged();
 		notifyObservers(locatableObj);
-	}
-	
-	@Override
-	public synchronized void addObserver(Observer o) {
-		// TODO Auto-generated method stub
-		super.addObserver(o);
 	}
 	
 }

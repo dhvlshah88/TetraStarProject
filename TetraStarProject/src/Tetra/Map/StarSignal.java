@@ -1,7 +1,7 @@
 /**
  * 
  */
-package Tetra;
+package Tetra.Map;
 
 import java.awt.Color;
 
