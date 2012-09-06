@@ -71,7 +71,7 @@ public class FinalSimulation extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		tface = new TFace(8, 8);
+		tface = TFace.getInstance(8, 8);
 		JButton btnScenarioOne = new JButton("Scenario One");
 
 		btnScenarioOne.addActionListener(new ActionListener() {
@@ -86,7 +86,7 @@ public class FinalSimulation extends JFrame {
 		JButton btnScenarioTwo = new JButton("Scenario Two");
 		btnScenarioTwo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TFace tface = new TFace(8, 8);
+				tface = TFace.getInstance(8, 8);
 				gui = new TetraStarGUI(8,8);
 				scenarioFactory = new ScenarioFactory();
 				scenario = scenarioFactory.createScenario(2, gui, tface);
@@ -97,7 +97,7 @@ public class FinalSimulation extends JFrame {
 		JButton btnScenarioThree = new JButton("Scenario Three");
 		btnScenarioThree.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				TFace tface = new TFace(8, 8);
+				tface = TFace.getInstance(8, 8);
 				gui = new TetraStarGUI(8,8);
 				scenarioFactory = new ScenarioFactory();
 				scenario = scenarioFactory.createScenario(3, gui, tface);
@@ -108,7 +108,7 @@ public class FinalSimulation extends JFrame {
 		JButton btnScenarioFour = new JButton("Scenario Four");
 		btnScenarioFour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TFace tface = new TFace(8, 8);
+				tface = TFace.getInstance(8, 8);
 				gui = new TetraStarGUI(8,8);
 				scenarioFactory = new ScenarioFactory();
 				scenario = scenarioFactory.createScenario(4, gui, tface);
@@ -119,7 +119,7 @@ public class FinalSimulation extends JFrame {
 		JButton btnScenarioFive = new JButton("Scenario Five");
 		btnScenarioFive.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TFace tface = new TFace(8, 8);
+				tface = TFace.getInstance(8, 8);
 				gui = new TetraStarGUI(8,8);
 				scenarioFactory = new ScenarioFactory();
 				scenario = scenarioFactory.createScenario(5, gui, tface);				

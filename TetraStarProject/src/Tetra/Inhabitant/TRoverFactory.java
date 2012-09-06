@@ -13,7 +13,6 @@ import Tetra.Position;
  */
 public class TRoverFactory {
 
-	private TVader tVader = null;
 	private TRovers tRover = null;
 	
 	public TRovers createTRover(String type, Position currentPosition){
@@ -25,16 +24,8 @@ public class TRoverFactory {
 		} else if (type.equalsIgnoreCase("THero")) {
 			tRover = new THero(currentPosition);
 		} else if (type.equalsIgnoreCase("TVader")) {
-			tRover = createTVaderIfNotPresent(currentPosition);
+			tRover = TVader.getInstance(currentPosition);
 		}
 		return tRover;
-	}
-
-	private TVader createTVaderIfNotPresent(Position currentPosition){
-		if(tVader==null){
-			tVader=new TVader(currentPosition);
-		}
-
-		return tVader;
 	}
 }

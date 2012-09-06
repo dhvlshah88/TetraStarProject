@@ -4,6 +4,7 @@
 package Tetra.Scenarios;
 
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import Tetra.TFace;
 import Tetra.TetraGUIManager;
@@ -248,4 +249,5 @@ public class Scenario extends MouseAdapter {
 	public THero getTHero1(){
 		return thero1;
 	}
+	
 }

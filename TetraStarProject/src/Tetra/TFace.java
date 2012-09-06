@@ -18,16 +18,26 @@ public class TFace {
 	private HashMap<String, Position> positionCollection = null;
 	private Position position = null;
 	private int totalRows, totalColumns = 0;
+	private static TFace instance = null;
 	
 	/**
 	 * Parameterized Constructor
 	 * @param totalRows <i>Total number of rows</i>
 	 * @param totalColumns <i>Total number of columns</i>
 	 */
-	public TFace(int totalRows, int totalColumns) {
+	private TFace(int totalRows, int totalColumns) {
 		this.totalRows = totalRows;
 		this.totalColumns = totalColumns;
 		buildHashMap(totalRows, totalColumns);
+	}
+	
+	public static TFace getInstance(int totalRows, int totalColumns){
+		if(instance == null){
+			instance = new TFace(totalRows, totalColumns);
+		}
+		
+		return instance;
+		
 	}
 	
 	/**

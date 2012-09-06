@@ -31,6 +31,8 @@ public class TVader extends TRovers {
 	private TBaseCollection tbaseColl;
 	private ILocatable locatableObj;
 	private Position nextPosition; 
+	private static TVader instance = null;
+
 
 	/*
 	 * Default Constructor 
@@ -39,10 +41,18 @@ public class TVader extends TRovers {
 
 	}
 
-	public TVader(Position currentPosition){
+	private TVader(Position currentPosition){
 		super(currentPosition);
 		positionList = new ArrayList<Position>();
 		recordMove(currentPosition);
+	}
+	
+	public static TVader getInstance(Position position){
+		if(instance == null){
+			instance = new TVader(position);
+		}
+		
+		return instance;
 	}
 
 	public void setVehicle(Vehicle vehicle){
