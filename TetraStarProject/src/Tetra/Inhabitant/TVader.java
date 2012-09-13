@@ -34,13 +34,6 @@ public class TVader extends TRovers {
 	private static TVader instance = null;
 
 
-	/*
-	 * Default Constructor 
-	 */
-	public TVader(){
-
-	}
-
 	private TVader(Position currentPosition){
 		super(currentPosition);
 		positionList = new ArrayList<Position>();
